@@ -1,0 +1,47 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui";
+// If you want to add something do it here
+@import "custom";
+
+ 
+
+.card-header:not(.content-center) > .c-icon:first-child {
+  margin-right: 0.1rem;
+  margin-top: 0.1rem;
+  vertical-align: top;
+  width: 1.2rem;
+  height: 1.2rem;
+  font-size: 1.2rem;
+}
+// .c-active{
+
+// }
+
+.c-active, .c-sidebar.c-sidebar-light .c-sidebar-nav-link:hover, .c-sidebar.c-sidebar-light .c-sidebar-nav-dropdown-toggle:hover {
+    color: #000 !important;
+    background: #EDF4FF !important;
+} 
+
+.text-error{
+  top: -15px;
+  display: inline;
+  position: relative;
+  font-size: 80%;
+  color: #e55353 !important;
+}
+.inline-table-head{ 
+  vertical-align: middle; overflow: hidden;
+}
+.nav-link.active .dot-mode,
+ #croxx-tab .col-sm-4 .tab-dot {
+  color: #00EC83;
+}
+.col-form-label-lg {
+  padding-top: calc(0.25rem + 1px);
+  padding-bottom: calc(0.25rem + 1px);
+  font-size: 1rem;
+  line-height: 1.2;
+}
