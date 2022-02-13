@@ -8,7 +8,7 @@
             <CCard  class="box-croxx">
               <CCardBody>
                 <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
-                  <form action="" @submit.prevent="handleSubmit(createNewCheckList)">
+                  <form action="" @submit.prevent="createNewCheckList">
                     <CTabs variant="" id="croxx-tab" vertical 
                       :active-tab.sync="activeTab" style="min-height: 700px;">
                       <!-- Tab 1 -->
@@ -65,7 +65,7 @@
                                       :state="(validationContext)" trim
                                       :editor-toolbar="customToolbar"
                                       size="sm"
-                                    /> <br>
+                                    /> <br> 
                                   <span class="text-error" v-if="validationContext.errors[0]">{{validationContext.errors[0]}}</span>
                                 </validation-provider>
 
@@ -196,7 +196,6 @@
                               Step 3 / 4
                             </p>
                             <h4 class="h4 py-2 bold"> Verifiers</h4>
-
                             <div class="team-members">
                                 <CRow v-for="(verifier, i) in form.verifiers" :key="i">
                                   <CCol sm="5">
@@ -212,7 +211,7 @@
                                           />
                                         <span class="text-error" v-if="validationContext.errors[0]">{{validationContext.errors[0]}}</span>
                                       </validation-provider>
-                                  </CCol> 
+                                  </CCol>  
                                   <CCol sm="5">
                                       <validation-provider name="Job Role" rules="required" v-slot="validationContext">
                                           <CSelect 
@@ -221,6 +220,7 @@
                                             :invalid-feedback="validationContext.errors[0]"
                                             :class="{ 'is-invalid': validationContext.errors[0] }"
                                             :value.sync="verifier.role" 
+                                            :options="roleList"
                                             placeholder="Select Job Role"
                                           />
                                         <!-- :options="Object.values($store.state.roles.dataList)" -->
@@ -258,9 +258,10 @@
                             <div class="my-3">
                                 <h4 class="h4 py-2 bold "> Attn / Access</h4>
                                 <CRow>
+                                  <!-- {{group_roles}} -->
                                   <CCol v-for="(group,i) in group_roles" :key="i" md="4">
-                                      <!-- {{i}}. {{group.length}} <br> -->
-                                      <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold">  Criteria </label>
+                                        <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold"> </label>
+                                        <!-- <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold">  {{ groups.find( x =>x.id == i) }} </label> -->
                                       <div  v-for="(role,r) in group_roles[i]" :key="r"
                                         role="group" class="mb-2 form-check"
                                         ><input id="uid-kqjzgs10s7p" type="checkbox" v-model="form.access" class="form-check-input" :value="role.id">
@@ -269,14 +270,14 @@
                                       
                                   </CCol> 
                                 </CRow>
-                            </div> 
+                            </div>  
 
                             <div class="my-3">
                                 <h4 class="h4 py-2 bold "> Approvers</h4>
                                 <CRow>
-                                  <CCol v-for="(group,i) in group_roles" :key="i" md="4">
-                                      <!-- {{i}}. {{group.length}} <br> -->
-                                      <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold">  Criteria </label>
+                                  <!-- {{}} -->
+                                  <CCol v-for="(group,i) in group_roles" :key="i" md="4" >
+                                      <!-- <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold">  {{ detail.id }} </label> -->
                                       <div  v-for="(role,r) in group_roles[i]" :key="r"
                                         role="group" class="mb-2 form-check"
                                         ><input id="uid-kqjzgs10s7p" type="checkbox" v-model="form.approvers" class="form-check-input" :value="role.id">
@@ -288,8 +289,14 @@
                             </div>
 
                             
-                              <div class="mt-4 flex justify-content-end">
-                                  <CButton type="BUTTON" @click="createNewCheckList"  color="primary"> Submit </CButton>
+                              <!-- <div class="mt-4 flex justify-content-end">
+                                  <CButton type="submit"  color="primary"> Submit </CButton>
+                              </div> -->
+
+                              
+                              <div class="py-3 float-right">
+                                <CButton type="submit" button="submit" 
+                                    class="bg-primary text-white px-4 rounded-10p mr-3  shadow-sm">Save</CButton>
                               </div>
                             
                         </div>
@@ -328,7 +335,7 @@ export default {
         'Verifiers',
         'Attn/Access'
       ],
-      activeTab: 3, 
+      activeTab: 0, 
       customToolbar: [
         ["bold", "italic", "underline"],
         [{ list: "ordered" }, { list: "bullet" }],
@@ -356,22 +363,16 @@ export default {
       
       group_roles: (this.$store.state.roles.dataGrouped),
       groups:(this.$store.state.groups.dataList),
+
       form : {
         name: '', 
         description: '',
-        comments: '',
         acceptance_criteria: '',
         documents: '',
         type: '',
-        questions: [
-          {
-            name: "What is life",
-            type: "upload",
-            unit: "cm"
-          }
-        ],
+        questions: [],
         verifiers: [ 
-          {type: 'Questions', role: 'Questions'}
+          {type: '', role: ''}
         ],
         access: [],
         approvers: [],
@@ -379,16 +380,34 @@ export default {
     }
   },
 
-  mounted() {
+   computed:{
+    ...mapState('roles', {
+       roleList: state => state.dataList.map((role) => {
+        role.label = role.name;
+        role.value = role.id;
+        return role;
+      }),
+    })
+    // roles: this.$store.state.roles.dataList.map((role) => {
+    //   role.label = role.name,
+    //   role.value = role.id
+    // })
+  },
+
+  created() {
     this.loadRolesRecords()
     this.loadGroupRecords()
   },
 
-  computed:{
-    
-  },
+ 
 
   methods: {
+
+    displayGroupName(index){
+      // var gp = groups.find( x => x.id == index);
+      // console.log(gp);
+      // return gp.name;
+    },
 
     loadRolesRecords(){
       let payload = {
@@ -402,16 +421,28 @@ export default {
         per_page : -1
       }; 
       this.$store.dispatch('groups/list', payload);
-      console.log(this.groups);
     },
 
     loadNewQuestion(question){
       this.form.questions.unshift(question)
-      console.log(this.form);
+      
     },
 
     createNewCheckList(){
-      console.log(this.form)
+      this.$store.dispatch('checklist/create', this.form)
+      .then(result => {
+        if (this.success !== false && this.error === false) {
+          this.loadRecords();
+          let msg = this.success;
+          this.$swal.fire("", msg, "success").then(function() {
+            // console.log(vm.success);
+          });
+        } else { 
+          this.$refs.form.setErrors(this.validationErrors); // set VeeValidation error
+          let msg = this.error;
+          this.$swal.fire("", msg, "error");
+        }
+      }); 
     },
 
     updateCheckbox(value){

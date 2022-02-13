@@ -87,14 +87,14 @@ const storeModule = {
 
       async create({ commit }, payload){
         try{
-            commit("SET_LOADING_DATALIST");
+            commit("SET_LOADING");
             let response = await $http.post("databases/database_list", payload); 
             let responsePayload = response.data;
-            commit("SET_DATALIST", responsePayload);
+            console.log(responsePayload);
+            commit("SET_DATA", responsePayload);
             commit("SET_SUCCESS", responsePayload.message);  
         } catch (error) {
           if (error && error.data) {
-            console.log(error);
             let errorPayload = error.data;
             if (errorPayload.message) {
               commit("SET_ERROR", errorPayload.message);

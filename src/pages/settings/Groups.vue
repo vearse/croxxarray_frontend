@@ -33,7 +33,7 @@
                     class="rounded-md hover-shadow-sm bg-white my-1"> 
                     <div class="row mx-0"> 
                       <div class="col-5">
-                        <h5 class="">{{group.name}} {{group.admin_id}} </h5>
+                        <h5 class="">{{group.name}} </h5>
                       </div>
                       <div class="col-7">
                         <h5 class=""> {{group.description}}</h5>

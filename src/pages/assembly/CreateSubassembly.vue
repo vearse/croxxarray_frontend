@@ -147,22 +147,22 @@
                             </p>
                             <h4 class="h4 py-2 bold"> Inclusions</h4>
 
-                            <div class="team-members" style="height: 300px;">
+                            <div class="tab-members" style="height: 300px;">
                                 <CTabs>
                                   <CTab  class="col text-center" title="Details" active>
                                     <div class="my-3 text-left">
                                       <p class="text-xs text-italic">In this section you should add general input fields and measurement information item should include</p>
                                       <div>
                                         <CInputCheckbox
-                                              v-for="(option, optionIndex) in 2"
-                                              :key="optionIndex"
-                                              :label="`Option ${option}`"
-                                              :value="option"
-                                              :custom="true"
-                                              :name="`Option 1${option}`"
-                                                :inline="true"
-                                              :checked="optionIndex === option"
-                                            />
+                                            v-for="(option, optionIndex) in 2"
+                                            :key="optionIndex"
+                                            :label="`Option ${option}`"
+                                            :value="option"
+                                            :custom="true"
+                                            :name="`Option 1${option}`"
+                                            :inline="true"
+                                            :checked="optionIndex === option"
+                                          />
                                       </div>
                                     </div>
                                       <div class=" my-3 justify-content-center">

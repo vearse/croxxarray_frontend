@@ -98,7 +98,6 @@ const storeModule = {
             } catch (error) { 
               if (error && error.data) {
                 let errorPayload = error.data; 
-                // console.log(errorPayload);
                 if (errorPayload.message) { 
                   commit("SET_ERROR", errorPayload.message);
                   if (errorPayload.errors) {

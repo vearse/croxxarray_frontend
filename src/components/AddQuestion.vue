@@ -16,7 +16,7 @@
           <form action="" > 
               <CRow>
                 <CCol sm="12">
-                   <validation-provider  name="Question" rules="required|max:100"
+                   <validation-provider  name="Question" rules="|max:100"
                     v-slot="validationContext">
                       <CInput
                         v-model="question.name" label="Question"  
@@ -88,10 +88,10 @@ export default {
   name: 'AddQuestion',
 
   props: {
-    isquestion: { 
-      type: Boolean,
-      required: true,
-    }
+    // isquestion: { 
+    //   type: Boolean,
+    //   required: true,
+    // }
   },
 
   data() {
@@ -114,7 +114,8 @@ export default {
 
   methods: {
     addNewQuestion(){
-       this.$emit('newQuestion', this.question)
+       this.$emit('newQuestion', this.question);
+       this.question.isquestion = false;
     },
 
     toggleMeasure(){

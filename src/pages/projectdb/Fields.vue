@@ -251,19 +251,19 @@ export default {
       console.log(this.form);
       this.$store.dispatch('fields/create', this.form)
       .then(result => {
-          if (this.success !== false && this.error === false) {
-            this.loadRecords();
-            this.createModal = false;
-            let msg = this.success;
-            this.$swal.fire("", msg, "success").then(function() {
-              // console.log(vm.success);
-            });
-          } else { 
-            this.$refs.form.setErrors(this.validationErrors); // set VeeValidation error
-            let msg = this.error;
-            this.$swal.fire("", msg, "error");
-          }
-        }); 
+        if (this.success !== false && this.error === false) {
+          this.loadRecords();
+          this.createModal = false;
+          let msg = this.success;
+          this.$swal.fire("", msg, "success").then(function() {
+            // console.log(vm.success);
+          });
+        } else { 
+          this.$refs.form.setErrors(this.validationErrors); // set VeeValidation error
+          let msg = this.error;
+          this.$swal.fire("", msg, "error");
+        }
+      }); 
  
     },
 

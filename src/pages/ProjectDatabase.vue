@@ -16,14 +16,14 @@
                  class="col-lg-4 col-md-6 col-sm-12 cursor-pointer">
                 <CCard style="height: 130px" class="hover-shadow-md box-croxx">
                   <CCardBody>
-                    <router-link :to="'/projectdb/'+ database.name | toLower " class="card-link">
+                    <router-link :to="'/projectdb/'+ database.link | toLower " class="card-link">
                     <div class="py-2">
                       <h5 class="h5 text-primary">{{database.name}}
                           <span class="float-right mr-3">
                           
                           </span>
                         </h5>
-                      <p>{{database.description}}</p>
+                      <p class="text-dark">{{database.description}}</p>
                     </div> 
                     </router-link>
                   </CCardBody>
@@ -41,8 +41,8 @@
                                 <v-icon name="pencil-alt" class="absolute" style="top:15px"></v-icon>
                               <!-- <CIcon name="cil-user" /> -->
                             </span> 
-                          </h5>
-                          <p>{{database.description}}</p>
+                          </h5> 
+                          <p class="text-dark">{{database.description}}</p>
                         </div> 
                      </router-link>
                   </CCardBody>
@@ -150,12 +150,12 @@ export default {
 
        systemDatabase: [
         //  {name: 'Segments', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
-         {name: 'Clients', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
-         {name: 'Fields', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
-         {name: 'Platforms', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
-         {name: 'Wells', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
-         {name: 'Job Types', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
-         {name: 'Completion Types', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'}
+         { link: 'clients', name: 'Clients', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
+         { link: 'fields', name: 'Fields', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
+         { link: 'platforms', name: 'Platforms', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
+         { link: 'wels', name: 'Wells', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
+         { link: 'jobs', name: 'Job Types', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
+         { link: 'completion', name: 'Completion Types', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'}
        ]
     }
   },
@@ -171,7 +171,7 @@ export default {
         error: state => state.error,
         success: state => state.success,
         validationErrors: state => state.validationErrors,
-        data: state => state.data,
+        data: state => state.data, 
         dataList: state =>state.dataList,
         dataListTotal: state =>state.dataListTotal,
       })  
@@ -191,9 +191,10 @@ export default {
       
       this.$store.dispatch('databases/create', this.form)
       .then(() => {
-          console.log(this.success, this.success !== false && this.error === false);  
-          if (this.success !== false && this.error === false) {
+          // console.log( this.data );  
+         if (this.data) {
             this.loadRecords();
+            this.$forceUpdate();
             this.createModal = false;
             let msg = this.success;
             this.$swal.fire("", msg, "success").then(function() {
@@ -204,7 +205,7 @@ export default {
             let msg = this.error;
             this.$swal.fire("", msg, "error");
           }
-        }); 
+        });  
     },
 
     updateDatabaseRecord(){
