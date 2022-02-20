@@ -8,11 +8,11 @@
             <CCard  class="box-croxx">
               <CCardBody>
                 <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
-                  <form action="" @submit.prevent="handleSubmit(createNewProject)">
+                  <form action="" @submit.prevent="createNewSubcomponent">
                     <CTabs variant="" id="croxx-tab" vertical 
                       :active-tab.sync="activeTab" style="min-height: 500px;">
                       <CTab active>
-                        <template slot="title">
+                        <template slot="title"> 
                           {{tabs[0]}} 
                           <v-icon name="circle" class="dot-mode float-right "></v-icon>
                         </template>
@@ -146,13 +146,40 @@
                                         </draggable>
                                       </div>
                                       <div class="d-flex my-3 justify-content-left">
-                                          <!-- <CButton type="button"  class="text-blue bg-transparent"> Add Fields <CIcon class="pl-2" name="cil-plus"/> </CButton> -->
-                                         <!-- <AddField  class="mr-3" />   -->
-                                         <AddQuestion  @newQuestion="loadNewQuestion"/> 
+                                         <AddQuestion class="ml-3"  @newQuestion="loadNewQuestion"/> 
                                       </div>
                                   </CTab>
                                   <CTab  class="" style="mi-width:140px" title="CheckSheet" >
-                                       <AddField  class="mr-3" />  
+                                      <div>
+                                        <draggable v-model="form.checksheet">
+                                            <transition-group name="fade" tag="div" class="mt-3 instruments">
+                                                <div v-for="(checklist, id) in form.checksheet" :key="id">
+                                                  <CListGroupItem 
+                                                      class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
+                                                      <div class="row mx-0">
+                                                        <div class="col-6">
+                                                          <p class="text-sm truncate">{{checklist}} </p>
+                                                        </div>
+                                                        <div class="col-4">
+                                                          <p class="text-sm truncate"> {{checklist}}</p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                          <p class="text-sm truncate"> 
+                                                            <CIcon class="pr-2" name="cil-cursor-move"/> 
+                                                            <CIcon class="pr-2" name="cil-trash"/> 
+                                                            <CIcon class="pr-2" name="cil-user"/> 
+                                                          </p>
+                                                        </div>
+                                                      </div>
+                                                    </CListGroupItem>
+                                                </div>
+                                            </transition-group>
+                                        </draggable>
+                                      </div>
+                                      <div class="d-flex my-3 justify-content-left">
+                                        <!-- <AddField class="ml-3"  @addChecklist="loadFields"/> -->
+                                        <AddField class="ml-3"  @addChecklist="loadFields"/> 
+                                      </div>
                                   </CTab>
                                 </CTabs>
                             </div>
@@ -209,22 +236,22 @@
                             <div class="my-3">
                                 <h4 class="h4 py-2 bold "> Approvers</h4>
                                  <CRow>
+                                        <!-- <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold">  {{ groups.find( x =>x.id == i) }} </label> -->
                                   <CCol v-for="(group,i) in group_roles" :key="i" md="4">
                                         <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold"> </label>
-                                        <!-- <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold">  {{ groups.find( x =>x.id == i) }} </label> -->
                                       <div  v-for="(role,r) in group_roles[i]" :key="r"
                                         role="group" class="mb-2 form-check"
                                         ><input id="uid-kqjzgs10s7p" type="checkbox" v-model="form.approvers" class="form-check-input" :value="role.id">
                                         <label for="uid-kqjzgs10s7p" class="form-check-label"  v-text="role.name" />
                                       </div>
-                                      
                                   </CCol> 
                                 </CRow>
                             </div>
 
                             
                               <div class="mt-4 flex justify-content-end">
-                                  <CButton type="button"  color="primary"> Submit </CButton>
+                                  <CButton type="submit" button="submit" 
+                                    class="bg-primary text-white px-4 rounded-10p mr-3  shadow-sm">Save</CButton>
                               </div>
                             
                         </div>
@@ -276,6 +303,7 @@ export default {
         type: null,
         category: null,
         description: null,
+
         questions: [],
         checksheet: [],
         access:[],
@@ -311,12 +339,30 @@ export default {
       this.$store.dispatch('componentTypes/list', payload);
     },
 
-     loadNewQuestion(question){
-       console.log(question);
+    loadNewQuestion(question){
       this.form.questions.unshift(question)
     },
 
-    createNewProject(){
+    loadFields(fields){
+      this.form.checksheet = fields;
+    },
+
+    createNewSubcomponent(){
+      console.log(this.form);
+      this.$store.dispatch('subcomponent/create', this.form)
+      .then(result => {
+        if (this.success !== false && this.error === false) {
+          this.loadRecords();
+          let msg = this.success;  
+          this.$swal.fire("", msg, "success").then(function() {
+            // console.log(vm.success);
+          });
+        } else { 
+          this.$refs.form.setErrors(this.validationErrors); // set VeeValidation error
+          let msg = this.error;
+          this.$swal.fire("", msg, "error");
+        }
+      }); 
 
     }
   }

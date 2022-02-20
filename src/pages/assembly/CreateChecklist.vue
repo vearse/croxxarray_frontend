@@ -263,8 +263,8 @@
                                         <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold"> </label>
                                         <!-- <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold">  {{ groups.find( x =>x.id == i) }} </label> -->
                                       <div  v-for="(role,r) in group_roles[i]" :key="r"
-                                        role="group" class="mb-2 form-check"
-                                        ><input id="uid-kqjzgs10s7p" type="checkbox" v-model="form.access" class="form-check-input" :value="role.id">
+                                        role="group" class="mb-2 form-check">
+                                        <input id="uid-kqjzgs10s7p" type="checkbox" v-model="form.access" class="form-check-input" :value="role.id">
                                         <label for="uid-kqjzgs10s7p" class="form-check-label"  v-text="role.name" />
                                       </div>
                                       

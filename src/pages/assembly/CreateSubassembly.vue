@@ -50,7 +50,7 @@
                               </CCol> 
                             </CRow>
 
-                            <CRow>
+                            <!-- <CRow>
                               <CCol sm="12" class="my-2">  
                                   <validation-provider  name="Accepteance Criteria" rules="required|max:500" v-slot="validationContext">
                                   <label for="uid-78dm4967fch" class="col-form-label-lg"> Accepteance Criteria </label>
@@ -66,9 +66,8 @@
                                     /> <br>
                                   <span class="text-error" v-if="validationContext.errors[0]">{{validationContext.errors[0]}}</span>
                                 </validation-provider>
-
                               </CCol> 
-                            </CRow>
+                            </CRow> -->
                             <div class="flex justify-content-end">
                                 <CButton type="button"  color="primary" @click="activeTab = 1"> Next Step </CButton>
                             </div>
@@ -89,22 +88,17 @@
                               <div class="my-3">
                                   <h4 class="h4 py-2 bold "> Approvers</h4>
                                   <CRow>
-                                    <CCol v-for="i in 3" :key="i" md="4">
-                                        <validation-provider name="Role" rules="required" v-slot="validationContext">
-                                              <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold">  Criteria </label>
-                                            <CInputCheckbox
-                                                  v-for="(option, optionIndex) in 6"
-                                                  :key="optionIndex"
-                                                  :label="`Option ${option}`"
-                                                  :value="option"
-                                                  :custom="true"
-                                                  :name="`Option 1${option}`"
-                                                  :checked="optionIndex === option"
-                                                />
-                                          <span class="text-error" v-if="validationContext.errors[0]">{{validationContext.errors[0]}}</span>
-                                        </validation-provider>
-                                    </CCol> 
-                                  </CRow>
+                                  <CCol v-for="(group,i) in group_roles" :key="i" md="4">
+                                        <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold"> </label>
+                                        <!-- <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold">  {{ groups.find( x =>x.id == i) }} </label> -->
+                                      <div  v-for="(role,r) in group_roles[i]" :key="r"
+                                        role="group" class="mb-2 form-check"
+                                        ><input id="uid-kqjzgs10s7p" type="checkbox" v-model="form.approvers" class="form-check-input" :value="role.id">
+                                        <label for="uid-kqjzgs10s7p" class="form-check-label"  v-text="role.name" />
+                                      </div>
+                                      
+                                  </CCol> 
+                                </CRow>
                               </div>
 
                               <div class="my-3">
@@ -292,12 +286,20 @@ export default {
         'Make-up Plan'
       ],
       activeTab: 2,
+      categories: Object.values(this.$store.state.componentCategories.dataList),
+      types: Object.values(this.$store.state.componentTypes.dataList),
+      group_roles: (this.$store.state.roles.dataGrouped),
       form : {
-        well_id: null,
-        job_type_id: null,
-        job_number: null,
-        job_tart: null,
-        planned_loadout: null
+        name: '',
+        shortname: '',
+        type: null,
+        category: null,
+        description: null,
+
+        questions: [],
+        checksheet: [],
+        access:[],
+        approvers: [],
       }
     }
   },
@@ -311,7 +313,7 @@ export default {
   },
 
   methods: {
-
+ 
     loadRecords(){
       let payload = {};
       // this.$store.dispatch('databases/list', payload);

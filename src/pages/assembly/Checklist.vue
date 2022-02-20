@@ -33,7 +33,7 @@
                                   <CIcon class="" name="cil-magnifying-glass"/> 
                                 </div>
                               </template>
-                            </CInput>
+                            </CInput> 
                           </div> 
                         </div>
                         <div class=" float-right">
@@ -48,7 +48,7 @@
                       <div  small="true">
                         <div class="position-relative table-responsive">
                           <table class="table table-hover">
-                            <thead>
+                            <thead> 
                               <tr>
                                 <th class="inline-table-head"><div></div></th>
                                 <th class="inline-table-head"><div>Name</div></th>
@@ -155,12 +155,10 @@ export default {
         dataList: state =>state.dataList,
         dataListTotal: state => state.dataListTotal,
         dataListLastPage: state => state.dataListLastPage,
-      })  
+      })   
   },
 
   methods: {
-
-
     handlePageChange(e){
       console.log(e)
     },
@@ -173,7 +171,6 @@ export default {
     loadRecords(){
       let payload = {};
       this.$store.dispatch('checklist/list', payload);
-      
     }
   }
 }

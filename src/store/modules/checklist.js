@@ -76,12 +76,13 @@ const storeModule = {
 
     actions: { 
         async list({ commit }, payload){
-            try{
+            try{ 
                 commit("SET_LOADING_DATALIST");
                 let response = await $http.get("templating/checklist", {
                     params: payload 
                 });
-                let responsePayload = response.data.fields; 
+                let responsePayload = response.data.data; 
+                console.log(responsePayload);
                 commit("SET_DATALIST", responsePayload);  
             } catch (error) {
               //
@@ -92,7 +93,7 @@ const storeModule = {
             try{
                 commit("SET_LOADING");
                 let response = await $http.post("templating/checklist", payload); 
-                let responsePayload = response.data;
+                let responsePayload = response.data; 
                 commit("SET_DATA", responsePayload);
                 commit("SET_SUCCESS", responsePayload.message);  
             } catch (error) {
