@@ -35,39 +35,23 @@
                                   </validation-provider>
                               </CCol> 
                             </CRow>
-                            <CRow>
+                            
+                            <CRow class="mt-2">
                               <CCol sm="12">
-                                  <validation-provider  name="Description" rules="required" v-slot="validationContext">
-                                    <CInput 
-                                      label="Description"
-                                      size="lg" v-model="form.job_type_id"
-                                      :invalid-feedback="validationContext.errors[0]"
-                                      :class="{ 'is-invalid': validationContext.errors[0] }"
-                                      placeholder="Description"
-                                    />
+                                <validation-provider  name="Description" rules="max:512" v-slot="validationContext">
+                                  <CTextarea
+                                    v-model="form.description"
+                                    :invalid-feedback="validationContext.errors[0]"
+                                    :class="{ 'is-invalid': validationContext.errors[0] }"
+                                    label="Description"
+                                    placeholder="Description"
+                                    class="croxx-textarea"  
+                                  /> 
                                   <span class="text-error" v-if="validationContext.errors[0]">{{validationContext.errors[0]}}</span>
                                 </validation-provider>
                               </CCol> 
                             </CRow>
 
-                            <!-- <CRow>
-                              <CCol sm="12" class="my-2">  
-                                  <validation-provider  name="Accepteance Criteria" rules="required|max:500" v-slot="validationContext">
-                                  <label for="uid-78dm4967fch" class="col-form-label-lg"> Accepteance Criteria </label>
-                                    <vue-editor
-                                      id="input-description"
-                                      v-model.trim="form.description"     
-                                      placeholder="Provide more details here..."
-                                      maxlength="500" rows="2"
-                                      :invalid-feedback="validationContext.errors[0]"
-                                      :class="{ 'is-invalid': validationContext.errors[0] }"
-                                      :state="(validationContext)" trim
-                                      size="sm"
-                                    /> <br>
-                                  <span class="text-error" v-if="validationContext.errors[0]">{{validationContext.errors[0]}}</span>
-                                </validation-provider>
-                              </CCol> 
-                            </CRow> -->
                             <div class="flex justify-content-end">
                                 <CButton type="button"  color="primary" @click="activeTab = 1"> Next Step </CButton>
                             </div>
@@ -82,21 +66,18 @@
                             <p class="small">
                               Step 2 / 4
                             </p>
-                            <h4 class="h4 py-2 bold"> Checklist Questions</h4>
                             <div class="">
                              
-                              <div class="my-3">
-                                  <h4 class="h4 py-2 bold "> Approvers</h4>
-                                  <CRow>
-                                  <CCol v-for="(group,i) in group_roles" :key="i" md="4">
-                                        <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold"> </label>
+                             <div class="my-3">
+                                <h4 class="h4 py-2 bold "> Approvers</h4>
+                                 <CRow>
                                         <!-- <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold">  {{ groups.find( x =>x.id == i) }} </label> -->
-                                      <div  v-for="(role,r) in group_roles[i]" :key="r"
-                                        role="group" class="mb-2 form-check"
-                                        ><input id="uid-kqjzgs10s7p" type="checkbox" v-model="form.approvers" class="form-check-input" :value="role.id">
+                                  <CCol v-for="(group,i) in group_roles" :key="i" md="4">
+                                      <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold"> </label>
+                                      <div  v-for="(role,r) in group_roles[i]" :key="r" role="group" class="mb-2 form-check">
+                                        <input id="uid-kqjzgs10s7p" type="checkbox" v-model="form.approvers" class="form-check-input" :value="role.id">
                                         <label for="uid-kqjzgs10s7p" class="form-check-label"  v-text="role.name" />
                                       </div>
-                                      
                                   </CCol> 
                                 </CRow>
                               </div>
@@ -105,19 +86,11 @@
                                   <h4 class="h4 py-2 bold "> Segments</h4>
                                   <CRow>
                                     <CCol md="4">
-                                        <validation-provider name="Role" rules="required" v-slot="validationContext">
-                                              <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold">  Criteria </label>
-                                            <CInputCheckbox
-                                                  v-for="(option, optionIndex) in 6"
-                                                  :key="optionIndex"
-                                                  :label="`Option ${option}`"
-                                                  :value="option"
-                                                  :custom="true"
-                                                  :name="`Option 1${option}`"
-                                                  :checked="optionIndex === option"
-                                                />
-                                          <span class="text-error" v-if="validationContext.errors[0]">{{validationContext.errors[0]}}</span>
-                                        </validation-provider>
+                                        <label for="uid-78dm4967fch" class="py-2 text-primary col-form-label-lg font-bold"> </label>
+                                        <div  v-for="(segment,r) in segments" :key="r" role="group" class="mb-2 form-check">
+                                          <input id="uid-kqjzgs10s7p" type="checkbox" v-model="form.segments" class="form-check-input" :value="segment.id">
+                                          <label for="uid-kqjzgs10s7p" class="form-check-label"  v-text="segment.name" />
+                                        </div>
                                     </CCol> 
                                   </CRow>
                               </div>
@@ -144,7 +117,48 @@
                             <div class="tab-members" style="height: 300px;">
                                 <CTabs>
                                   <CTab  class="col text-center" title="Details" active>
-                                    <div class="my-3 text-left">
+                                      <div class="my-3 text-left">
+                                        <p class="text-xs text-italic">In this section you should add general input fields and measurement information item should include</p>
+                                        <div>
+                                          <draggable v-model="form.questions">
+                                              <transition-group name="fade" tag="div" class="mt-3 instruments">
+                                                  <div v-for="(question, id) in form.questions" :key="id">
+                                                    <CListGroupItem 
+                                                        class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
+                                                        <div class="row mx-0">
+                                                          <div class="col-5">
+                                                            <p class="text-sm truncate">{{question.name}} </p>
+                                                          </div>
+                                                          <div class="col-3">
+                                                            <p class="text-sm truncate"> {{question.type}}</p>
+                                                          </div>
+                                                          <div class="col-2">
+                                                            <p class="text-sm truncate"> {{question.unit}}</p>
+                                                          </div>
+                                                          <div class="col-2">
+                                                            <p class="text-sm truncate"> 
+                                                              <CIcon class="pr-2" name="cil-cursor-move"/> 
+                                                              <CIcon class="pr-2" name="cil-trash"/> 
+                                                              <CIcon class="pr-2" name="cil-user"/> 
+                                                            </p>
+                                                          </div>
+                                                        </div>
+                                                      </CListGroupItem>
+                                                  </div>
+                                              </transition-group>
+                                          </draggable>
+                                        </div>
+                                          <div class="d-flex my-3 justify-content-left">
+                                            <AddQuestion class="ml-3"  @newQuestion="loadNewQuestion"/> 
+                                          </div>
+                                      </div>
+                                      <!-- <div class=" my-3 justify-content-center">
+                                        <CButton type="button"  class="text-blue bg-transparent"> Add Fields <CIcon class="pl-2" name="cil-plus"/> </CButton>
+                                      </div>  -->
+                                  </CTab>
+                                  <CTab  class="col text-center" title="CheckSheet" >
+                                    
+                                    <div class="mt-2  text-left">
                                       <p class="text-xs text-italic">In this section you should add general input fields and measurement information item should include</p>
                                       <div>
                                         <CInputCheckbox
@@ -159,23 +173,38 @@
                                           />
                                       </div>
                                     </div>
-                                      <div class=" my-3 justify-content-center">
-                                        <CButton type="button"  class="text-blue bg-transparent"> Add Fields <CIcon class="pl-2" name="cil-plus"/> </CButton>
+                                      <div>
+                                        <draggable v-model="form.checksheet">
+                                            <transition-group name="fade" tag="div" class="mt-3 instruments">
+                                                <div v-for="(checklist, id) in form.checksheet" :key="id">
+                                                  <CListGroupItem 
+                                                      class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
+                                                      <div class="row mx-0">
+                                                        <div class="col-6">
+                                                          <p class="text-sm truncate">{{checklist}} </p>
+                                                        </div>
+                                                        <div class="col-4">
+                                                          <p class="text-sm truncate"> {{checklist}}</p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                          <p class="text-sm truncate"> 
+                                                            <CIcon class="pr-2" name="cil-cursor-move"/> 
+                                                            <CIcon class="pr-2" name="cil-trash"/> 
+                                                            <CIcon class="pr-2" name="cil-user"/> 
+                                                          </p>
+                                                        </div>
+                                                      </div>
+                                                    </CListGroupItem>
+                                                </div>
+                                            </transition-group>
+                                        </draggable>
+                                      </div>
+                                      <div class="d-flex my-3 justify-content-left">
+                                        <AddField class="ml-3"  @addChecklist="loadFields"/> 
                                       </div>
                                   </CTab>
-                                  <CTab  class="col text-center" title="CheckSheet" >
-                                    2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                                    officia deserunt mollit anim id est laborum.
-                                  </CTab>
                                   <CTab  class="col text-center" title="Approvals" >
-                                    3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                                    officia deserunt mollit anim id est laborum.
+                                      <div class=""></div>
                                   </CTab>
                                 </CTabs>
                             </div>
@@ -184,23 +213,50 @@
                               
                                 <CTabs>
                                   <CTab  title="Subcomponents" active>
-                                    <div class="my-3 text-left">
+                                    
+                                    <div class="mt-2  text-left">
                                       <p class="text-xs text-italic">In this section you should add general input fields and measurement information item should include</p>
                                       <div>
                                         <CInputCheckbox
-                                              v-for="(option, optionIndex) in 2"
-                                              :key="optionIndex"
-                                              :label="`Option ${option}`"
-                                              :value="option"
-                                              :custom="true"
-                                              :name="`Option 1${option}`"
-                                                :inline="true"
-                                              :checked="optionIndex === option"
-                                            />
+                                            v-for="(option, optionIndex) in 2"
+                                            :key="optionIndex"
+                                            :label="`Option ${option}`"
+                                            :value="option"
+                                            :custom="true"
+                                            :name="`Option 1${option}`"
+                                            :inline="true"
+                                            :checked="optionIndex === option"
+                                          />
                                       </div>
                                     </div>
-                                      <div class=" my-3 justify-content-center">
-                                        <CButton type="button"  class="text-blue bg-transparent"> Add Fields <CIcon class="pl-2" name="cil-plus"/> </CButton>
+                                     <div>
+                                        <draggable v-model="form.checksheet">
+                                            <transition-group name="fade" tag="div" class="mt-3 instruments">
+                                                <div v-for="(checklist, id) in form.checksheet" :key="id">
+                                                  <CListGroupItem 
+                                                      class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
+                                                      <div class="row mx-0">
+                                                        <div class="col-6">
+                                                          <p class="text-sm truncate">{{checklist}} </p>
+                                                        </div>
+                                                        <div class="col-4">
+                                                          <p class="text-sm truncate"> {{checklist}}</p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                          <p class="text-sm truncate"> 
+                                                            <CIcon class="pr-2" name="cil-cursor-move"/> 
+                                                            <CIcon class="pr-2" name="cil-trash"/> 
+                                                            <CIcon class="pr-2" name="cil-user"/> 
+                                                          </p>
+                                                        </div>
+                                                      </div>
+                                                    </CListGroupItem>
+                                                </div>
+                                            </transition-group>
+                                        </draggable>
+                                      </div>
+                                      <div class="d-flex my-3 justify-content-left">
+                                        <AddSubcomponent class="ml-3"  @addChecklist="loadFields"/> 
                                       </div>
                                   </CTab>
                                 </CTabs>
@@ -271,11 +327,20 @@
 </style>
 <script>
 import { mapState } from 'vuex'
-// border-r-2 border-fuchsia-600
+import AddQuestion from '../../components/AddQuestion.vue';
+import AddField from '../../components/AddField.vue';
+
+import AddSubcomponent from '../../components/AddSubcomponent.vue';
+import draggable from 'vuedraggable'
 
 export default {
-  name: 'CreateProject',
-  components: {},
+  name: 'CreateSubAssembly',
+  components: {
+    AddQuestion,
+    AddField,
+    AddSubcomponent,
+    draggable
+  },
 
   data () {
     return {
@@ -287,18 +352,16 @@ export default {
       ],
       activeTab: 2,
       categories: Object.values(this.$store.state.componentCategories.dataList),
-      types: Object.values(this.$store.state.componentTypes.dataList),
+      segments: Object.values(this.$store.state.segments.dataList),
       group_roles: (this.$store.state.roles.dataGrouped),
       form : {
         name: '',
-        shortname: '',
-        type: null,
-        category: null,
         description: null,
+        shortname: '',
+        segments: null,
 
         questions: [],
         checksheet: [],
-        access:[],
         approvers: [],
       }
     }
@@ -317,6 +380,14 @@ export default {
     loadRecords(){
       let payload = {};
       // this.$store.dispatch('databases/list', payload);
+    },
+
+    loadFields(fields){
+      this.form.checksheet = fields;
+    },
+    
+    loadNewQuestion(question){
+      this.form.questions.unshift(question)
     },
 
     createNewProject(){
