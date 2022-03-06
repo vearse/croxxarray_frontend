@@ -7,7 +7,7 @@
         <div class="my-3">
             <CCard  class="box-croxx">
               <CCardBody>
-                <validation-observer ref="form" v-slot="{ invalid, handleSubmit }">
+                <validation-observer ref="form" v-slot="{ invalid }">
                   <form action="" @submit.prevent="createNewCheckList">
                     <CTabs variant="" id="croxx-tab" vertical 
                       :active-tab.sync="activeTab" style="min-height: 700px;">
@@ -38,7 +38,7 @@
                             </CRow>
                             <CRow>
                               <CCol sm="12">
-                                  <validation-provider  name="Description" rules="required" v-slot="validationContext">
+                                  <validation-provider  name="Description" rules="required|max:100" v-slot="validationContext">
                                     <CInput 
                                       label="Description"
                                       size="lg" v-model="form.description"
@@ -63,7 +63,7 @@
                                       :invalid-feedback="validationContext.errors[0]"
                                       :class="{ 'is-invalid': validationContext.errors[0] }"
                                       :state="(validationContext)" trim
-                                      :editor-toolbar="customToolbar"
+                                      :editor-toolbar="editorToolbar"
                                       size="sm"
                                     /> <br> 
                                   <span class="text-error" v-if="validationContext.errors[0]">{{validationContext.errors[0]}}</span>
@@ -149,27 +149,6 @@
                                         </div>
                                     </transition-group>
                                 </draggable>
-                                <!-- <CListGroupItem  v-for="i in 1" :key="i"
-                                  class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
-                                  <div class="row mx-0">
-                                    <div class="col-5">
-                                      <p class="text-sm truncate">Was Oil quage  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, minus.</p>
-                                    </div>
-                                    <div class="col-3">
-                                      <p class="text-sm truncate"> Radio</p>
-                                    </div>
-                                    <div class="col-2">
-                                      <p class="text-sm truncate"> cm</p>
-                                    </div>
-                                    <div class="col-2">
-                                      <p class="text-sm truncate"> 
-                                         <CIcon class="pr-2" name="cil-cursor-move"/> 
-                                         <CIcon class="pr-2" name="cil-trash"/> 
-                                         <CIcon class="pr-2" name="cil-user"/> 
-                                      </p>
-                                    </div>
-                                  </div>
-                                </CListGroupItem> -->
 
                               </CListGroup>
 
@@ -227,10 +206,10 @@
                                         <span class="text-error" v-if="validationContext.errors[0]">{{validationContext.errors[0]}}</span>
                                       </validation-provider>
                                   </CCol>
-                                   <CCol sm="2"> 
+                                   <CCol sm="2">  
                                      <div v-if="i"> 
                                       <CButton type="button"> <CIcon name="cil-trash"  class="mr-3"/> </CButton>
-                                      <CButton type="button"> <CIcon name="cil-user" /> </CButton>
+                                      <CButton type="button"  @click="removeTeamList(i)"> <CIcon name="cil-user" /> </CButton>
                                      </div>
                                   </CCol>
                                 </CRow>
@@ -289,7 +268,7 @@
                             </div>
 
                             
-                              <!-- <div class="mt-4 flex justify-content-end">
+                              <!-- <div class="mt-4 flex justify-content-end"> :disabled="invalid"
                                   <CButton type="submit"  color="primary"> Submit </CButton>
                               </div> -->
 
@@ -342,9 +321,9 @@ export default {
         ["image", "code-block"]
       ],
       editorToolbar: [
-        [{ font: [] }],
+        // [{ font: [] }],
         // [{ size: [] }],
-        [{ header: [] }],
+        // [{ header: [] }],
         ["bold", "italic", "underline", "strike"],
         [{ align: [] }],
         [{ list: "ordered" }, { list: "bullet" }],
@@ -356,9 +335,13 @@ export default {
       add_question: false,
 
       input_types: [
+        { value: 'textbox', label: 'Textbox Input'}, 
         { value: 'radio', label: 'Radio'}, 
         { value: 'checkbox', label: 'Checkbox '}, 
         { value: 'upload', label: 'Upload '}, 
+        { value: 'textarea', label: 'Textarea Input'}, 
+        { value: 'date', label: 'Date '}, 
+        { value: 'dropdown', label: 'Dropdown '}, 
       ], 
       
       group_roles: (this.$store.state.roles.dataGrouped),
@@ -387,6 +370,15 @@ export default {
         role.value = role.id;
         return role;
       }),
+      ...mapState("checklist", {
+        isLoading: state => state.loading,
+        error: state => state.error,
+        success: state => state.success,
+        validationErrors: state => state.validationErrors,
+        data: state => state.data,
+        dataSet: state => state.dataSet,
+        dataSetTotal: state => state.dataSetTotal
+      }),
     })
     // roles: this.$store.state.roles.dataList.map((role) => {
     //   role.label = role.name,
@@ -394,7 +386,7 @@ export default {
     // })
   },
 
-  created() {
+  mounted() {
     this.loadRolesRecords()
     this.loadGroupRecords()
   },
@@ -402,12 +394,6 @@ export default {
  
 
   methods: {
-
-    displayGroupName(index){
-      // var gp = groups.find( x => x.id == index);
-      // console.log(gp);
-      // return gp.name;
-    },
 
     loadRolesRecords(){
       let payload = {
@@ -424,23 +410,27 @@ export default {
     },
 
     loadNewQuestion(question){
-      this.form.questions.unshift(question)
-      
+      this.form.questions.push(question)
+    },
+ 
+    removeTeamList(i){
+      console.log('Removing')
+      this.form.verifiers.splice(i,1);
     },
 
     createNewCheckList(){
+      let vm  = this;
       this.$store.dispatch('checklist/create', this.form)
-      .then(result => {
+      .then(() => {
         if (this.success !== false && this.error === false) {
-          this.loadRecords();
           let msg = this.success;
-          this.$swal.fire("", msg, "success").then(function() {
-            // console.log(vm.success);
-          });
+           this.$swal.fire("", msg, "success").then(function() {
+              vm.$router.push({ name: "Checklist"})
+           });
         } else { 
-          this.$refs.form.setErrors(this.validationErrors); // set VeeValidation error
           let msg = this.error;
           this.$swal.fire("", msg, "error");
+          this.$refs.form.setErrors(this.validationErrors); // set VeeValidation error
         }
       }); 
     },

@@ -150,18 +150,18 @@
                                       </div>
                                   </CTab>
                                   <CTab  class="" style="mi-width:140px" title="CheckSheet" >
-                                      <div>
+                                      <div style="width: 70%">
                                         <draggable v-model="form.checksheet">
                                             <transition-group name="fade" tag="div" class="mt-3 instruments">
-                                                <div v-for="(checklist, id) in form.checksheet" :key="id">
+                                                <div v-for="(checklist, id) in checksheet" :key="id">
                                                   <CListGroupItem 
                                                       class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
                                                       <div class="row mx-0">
-                                                        <div class="col-6">
-                                                          <p class="text-sm truncate">{{checklist}} </p>
+                                                        <div class="col-7">
+                                                          <p class="text-sm truncate">{{checklist.name}} </p>
                                                         </div>
                                                         <div class="col-4">
-                                                          <p class="text-sm truncate"> {{checklist}}</p>
+                                                          <p class="text-sm truncate"> {{checklist.type}}</p>
                                                         </div>
                                                         <div class="col-2">
                                                           <p class="text-sm truncate"> 
@@ -177,7 +177,6 @@
                                         </draggable>
                                       </div>
                                       <div class="d-flex my-3 justify-content-left">
-                                        <!-- <AddField class="ml-3"  @addChecklist="loadFields"/> -->
                                         <AddField class="ml-3"  @addChecklist="loadFields"/> 
                                       </div>
                                   </CTab>
@@ -295,6 +294,7 @@ export default {
       categories: Object.values(this.$store.state.componentCategories.dataList),
       types: Object.values(this.$store.state.componentTypes.dataList),
       group_roles: (this.$store.state.roles.dataGrouped),
+      checksheet: [],
       // add_question: false,
       // add_field: false,
       form : {
@@ -318,9 +318,15 @@ export default {
   },
 
   computed:{
-    ...mapState({
-      // dataList
-    })
+      ...mapState("subcomponent", {
+        isLoading: state => state.loading,
+        error: state => state.error,
+        success: state => state.success,
+        validationErrors: state => state.validationErrors,
+        data: state => state.data,
+        dataSet: state => state.dataSet,
+        dataSetTotal: state => state.dataSetTotal
+      }),
   },
 
   methods: {
@@ -340,27 +346,31 @@ export default {
     },
 
     loadNewQuestion(question){
-      this.form.questions.unshift(question)
+      console.log(question);
+      this.form.questions.push(question)
     },
 
     loadFields(fields){
       this.form.checksheet = fields;
+      this.$store.dispatch('checklist/list', {ids: fields})
+     
+      this.checksheet = Object.values(this.$store.state.checklist.dataSet)
     },
 
     createNewSubcomponent(){
       console.log(this.form);
+      let vm  = this;
       this.$store.dispatch('subcomponent/create', this.form)
-      .then(result => {
+      .then(() => {
         if (this.success !== false && this.error === false) {
-          this.loadRecords();
-          let msg = this.success;  
-          this.$swal.fire("", msg, "success").then(function() {
-            // console.log(vm.success);
-          });
+          let msg = this.success;
+           this.$swal.fire("", msg, "success").then(function() {
+              vm.$router.push({ name: "Subcomponent"})
+           });
         } else { 
-          this.$refs.form.setErrors(this.validationErrors); // set VeeValidation error
           let msg = this.error;
           this.$swal.fire("", msg, "error");
+          this.$refs.form.setErrors(this.validationErrors); // set VeeValidation error
         }
       }); 
 

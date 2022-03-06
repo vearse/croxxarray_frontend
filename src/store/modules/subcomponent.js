@@ -9,6 +9,7 @@ function initialState(){
         validationErrors: {},
         data: {},
         dataList: [],
+        dataSet: [],
         dataListTotal: 0,
         dataListLastPage: 1,
     }
@@ -71,7 +72,15 @@ const storeModule = {
           state.dataListTotal = payload.total;
           state.dataListLastPage = payload.last_page;
           state.loadingDataList = false;
-        }
+        },
+
+        SET_DATASET(state, payload){
+          state.dataSet =  payload.data;
+          state.dataListTotal = payload.total;
+          state.dataListLastPage = payload.last_page;
+          state.loadingDataList = false;
+        },
+
     },
 
     actions: { 
@@ -82,7 +91,11 @@ const storeModule = {
                     params: payload 
                 });
                 let responsePayload = response.data.data; 
-                commit("SET_DATALIST", responsePayload);  
+                if(payload.ids){
+                  commit("SET_DATASET", responsePayload);  
+                }else {
+                  commit("SET_DATALIST", responsePayload);  
+                }
             } catch (error) {
               //
             }

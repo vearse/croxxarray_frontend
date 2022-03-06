@@ -52,10 +52,10 @@
                               <tr>
                                 <th class="inline-table-head"><div></div></th>
                                 <th class="inline-table-head"><div>Name</div></th>
-                                <th class="inline-table-head"><div>Qcp Ip</div></th>
-                                <th class="inline-table-head"><div>Description</div></th>
-                                <th class="inline-table-head"><div>Date Created</div></th>
+                                <th class="inline-table-head"><div>Category</div></th>
+                                <th class="inline-table-head"><div>Type</div></th>
                                 <th class="inline-table-head"><div>Author</div></th>
+                                <th class="inline-table-head"><div>Date</div></th>
                               </tr>
                             </thead>
                             <tbody class="position-relative">
@@ -67,9 +67,8 @@
                                     <h2 data-v-431cdece="" v-if="dataList.length < 1"> No Items <svg data-v-431cdece="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" class="text-danger mb-2 c-icon c-icon-custom-size" width="30"><path fill="var(--ci-primary-color, currentColor)" d="M425.706,86.294A240,240,0,0,0,86.294,425.705,240,240,0,0,0,425.706,86.294ZM256,48A207.1,207.1,0,0,1,391.528,98.345L98.345,391.528A207.1,207.1,0,0,1,48,256C48,141.309,141.309,48,256,48Zm0,416a207.084,207.084,0,0,1-134.986-49.887l293.1-293.1A207.084,207.084,0,0,1,464,256C464,370.691,370.691,464,256,464Z" class="ci-primary"></path></svg></h2>
                                   </div>
                                 </td>
-                              </tr>
+                              </tr> 
                               <tr v-else
-                                
                                   v-for="(item, i) in dataList" :key="i">
                                   <td >
                                     <div role="group" class="custom-control custom-checkbox">
@@ -77,11 +76,16 @@
                                       <label for="uid-ya7qse3inbb" class="custom-control-label">  </label>
                                     </div>
                                   </td>
-                                  <td @click="editItem(item)" class=""> {{item.name}} </td>
-                                  <td @click="editItem(item)" class=""> {{item.qcp_ip}} </td>
-                                  <td @click="editItem(item)" class=""> {{item.description}} </td>
-                                  <td @click="editItem(item)" class=""> {{ item.created_at  | moment("MMMM Do YYYY") }} </td>
-                                  <td @click="editItem(item)" class="">  <span v-if="item.author">{{item.author.firstname}} {{item.author.lastname}}</span>   </td>
+                                  <td class=""> {{item.name}} </td>
+                                  <td class=""> {{item.subcomponet_category.name}} </td> 
+                                  <td class=""> {{item.subcomponet_type.name}} </td>
+                                  <td class=""> 
+                                     <span v-if="item.author">{{item.author.firstname}} {{item.author.lastname}}</span>   <br>
+                                  </td>
+                                
+                                  <td class=""> 
+                                       {{ item.created_at  | moment("Do MMMM, YYYY H i") }}
+                                   </td>
                               </tr>
                             </tbody>
                           </table>

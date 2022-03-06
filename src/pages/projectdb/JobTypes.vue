@@ -175,7 +175,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'Job Types',
+  name: 'JobTypes',
   components: {  },
 
   data () {
@@ -183,7 +183,7 @@ export default {
       createModal: false,
       detailModal: false,
       tableFilters: {
-        per_page: 2,
+        per_page: 25,
         page: 1, 
         search: null,
         sort_by: "created_at",

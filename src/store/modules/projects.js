@@ -9,11 +9,9 @@ function initialState(){
         validationErrors: {},
         data: {},
         dataList: [],
-        dataSet: [],
         dataListTotal: 0,
-        dataListLastPage: 1,
     }
-} 
+}
 
 const storeModule = {
     namespaced: true,
@@ -35,7 +33,7 @@ const storeModule = {
         },
 
         SET_LOADING_DATALIST(state){
-            state.loadingDataList = true;
+            state.isLoadingDataList = true;
         },
 
         SET_ERROR(state, message) {
@@ -69,32 +67,22 @@ const storeModule = {
 
         SET_DATALIST(state, payload){
           state.dataList =  payload.data;
-          state.dataListTotal = payload.total;
-          state.dataListLastPage = payload.last_page;
-          state.loadingDataList = false;
-        },
-
-        SET_DATASET(state, payload){
-          state.dataSet =  payload.data;
-          state.dataListTotal = payload.total;
-          state.dataListLastPage = payload.last_page;
-          state.loadingDataList = false;
+          state.dataSetTotal = payload.total;
+          state.dataSetLastPage = payload.last_page;
+          state.loadingDataSet = false;
         }
     },
 
     actions: { 
         async list({ commit }, payload){
-            try{ 
+            try{
                 commit("SET_LOADING_DATALIST");
-                let response = await $http.get("templating/checklist", {
+                let response = await $http.get("/croxxarray/projects", {
                     params: payload 
                 });
-                let responsePayload = response.data.data; 
-                if(payload.ids){
-                  commit("SET_DATASET", responsePayload);  
-                }else {
-                  commit("SET_DATALIST", responsePayload);  
-                }
+                console.log(response.data);
+                let responsePayload = response.data.data;
+                commit("SET_DATALIST", responsePayload);  
             } catch (error) {
               //
             }
@@ -103,11 +91,12 @@ const storeModule = {
         async create({ commit }, payload){
             try{
                 commit("SET_LOADING");
-                let response = await $http.post("templating/checklist", payload); 
-                let responsePayload = response.data; 
+                let response = await $http.post("/croxxarray/projects", payload); 
+                let responsePayload = response.data;
                 commit("SET_DATA", responsePayload);
                 commit("SET_SUCCESS", responsePayload.message);  
             } catch (error) {
+              console.log(error); 
               if (error && error.data) {
                 let errorPayload = error.data; 
                 // console.log(errorPayload);
@@ -122,13 +111,12 @@ const storeModule = {
               commit("SET_ERROR", "Internal connection error, please try again.");
             }
         },
-
         
         // View action
         async view({ commit }, id) {
           commit("SET_LOADING");
           try {
-            let response = await $http.get(`/templating/checklist/${id}`);
+            let response = await $http.get(`/croxxarray/projects/${id}`);
             let responsePayload = response.data;
             commit("SET_DATA", responsePayload);
             commit("SET_SUCCESS", responsePayload.message);
@@ -148,7 +136,7 @@ const storeModule = {
         async update({ commit }, { id, payload }) {
           commit("SET_LOADING");
           try {
-            let response = await $http.put(`/templating/checklist/${id}`, payload);
+            let response = await $http.put(`/croxxarray/projects/${id}`, payload);
             let responsePayload = response.data;
             commit("SET_DATA", responsePayload);
             commit("SET_SUCCESS", responsePayload.message);
@@ -171,7 +159,7 @@ const storeModule = {
         async delete({ commit }, id) {
           commit("SET_LOADING");
           try {
-            let response = await $http.delete(`/templating/checklist/${id}`);
+            let response = await $http.delete(`/croxxarray/projects/${id}`);
             let responsePayload = response.data;
             commit("SET_SUCCESS", responsePayload.message);
           } catch (error) {
@@ -185,7 +173,8 @@ const storeModule = {
             commit("SET_ERROR", "Internal connection error, please try again.");
           }
         }
-    }
+
+  }
 
 }
 

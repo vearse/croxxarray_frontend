@@ -29,7 +29,6 @@ const Wells = () => import('@/pages/projectdb/Wells')
 const JobTypes = () => import('@/pages/projectdb/JobTypes')
 const CompletionTypes = () => import('@/pages/projectdb/CompletionTypes')
 
- 
 const Projects = () => import('@/pages/projects/Projects')
 
 const CreateProject = () => import('@/pages/projects/CreateProject')

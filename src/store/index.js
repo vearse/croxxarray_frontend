@@ -19,8 +19,9 @@ import wells from "./modules/wells";
 import jobTypes from "./modules/job-types";
 import completionTypes from "./modules/completion-types";
 import checklist from "./modules/checklist";
-import subassembly from "./modules/subassembly";
 import subcomponent from "./modules/subcomponent";
+import subassembly from "./modules/subassembly";
+import projects from "./modules/projects";
 
 const state = {
   sidebarShow: 'responsive',
@@ -63,5 +64,6 @@ export default new Vuex.Store({
     checklist,
     subcomponent,
     subassembly,
+    projects
   }
 }) 

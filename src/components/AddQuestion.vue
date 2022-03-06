@@ -16,7 +16,7 @@
           <form action="" > 
               <CRow>
                 <CCol sm="12">
-                   <validation-provider  name="Question" rules="|max:100"
+                   <validation-provider  name="Question" rules="required|min:3|max:100"
                     v-slot="validationContext">
                       <CInput
                         v-model="question.name" label="Question"  
@@ -73,7 +73,7 @@
                 </CCol> 
               </CRow>
               <div class="py-3 float-right">
-                  <CButton type="button" button="submit" @click="addNewQuestion"
+                  <CButton type="button" button="submit" @click="addNewQuestion" :disabled="invalid"
                       class="bg-primary text-white px-4 rounded-10p mr-3  shadow-sm">{{ (question.editmode) ? 'Update' : 'Save'  }} </CButton>
               </div>
           </form>
@@ -96,11 +96,15 @@ export default {
 
   data() {
     return {
-      input_types: [
+     input_types: [
+        { value: 'textbox', label: 'Textbox Input'}, 
         { value: 'radio', label: 'Radio'}, 
         { value: 'checkbox', label: 'Checkbox '}, 
         { value: 'upload', label: 'Upload '}, 
-      ],
+        { value: 'textarea', label: 'Textarea Input'}, 
+        { value: 'date', label: 'Date '}, 
+        { value: 'dropdown', label: 'Dropdown '}, 
+      ], 
       question:{
         isquestion: false,
         editmode: false,
@@ -115,7 +119,14 @@ export default {
   methods: {
     addNewQuestion(){
        this.$emit('newQuestion', this.question);
-       this.question.isquestion = false;
+       this.question ={
+        isquestion: false,
+        editmode: false,
+        measure: false,
+        name: '',
+        type: '',
+        unit: ''
+      }
     },
 
     toggleMeasure(){

@@ -10,18 +10,34 @@
       :centered="true"
     >
       <template slot="header">
-          <h5 class="h5 bold">Add Field</h5>
+          <h5 class="h5 bold">Add Fields</h5>
           <button type="button" aria-label="Close" class="close text-danger" @click="isfield=false;">X</button>
       </template>
-      <CListGroup class="my-1">
+      <CListGroup class="my-1"> 
+        <div>
+            <div class=" header"> 
+              <span class="">
+                <CInput  
+                  class="float-right rounded-md w-full" style=" height:40px;" placeholder="Search">
+                  <template #append>
+                    <div class="px-3 pt-1 border" color="gray">
+                      <CIcon class="" name="cil-magnifying-glass"/> 
+                    </div>
+                  </template>
+                </CInput>
+              </span>
+            </div>
+        </div>
         <CListGroupItem v-for="(checklist, i) in checklist_dataList" :key="checklist.id"
-          class="bg-white" style="height:30px;">
-          <input id="uid-kqjzgs10s7p" type="checkbox" v-model="fields" class="form-check-input" :value="checklist.id">
-            <div class="row mx-0">
-              <div class="col-6">
+          :class="{'bg-blue-200 ' : fields.includes(checklist.id) , 'bg-white': !fields.includes(checklist.id)}"
+          class="" style="height:45px;    border-right: none; border-left: none;">  
+            <!-- {{fields.includes(checklist.id)}} -->
+            <div class="d-flex mx-0"> 
+              <div class="col-7">
+               <input id="uid-kqjzgs10s7p" ref="checklist"  type="checkbox" v-model="fields" class="form-check-input d-non" :value="checklist.id">
                 <h5 class="font-bold">{{checklist.name}}</h5>
               </div>
-              <div class="col-4">
+              <div class="col-3">
                 <h5 class="font-bold"> {{checklist.id}}</h5>
               </div>
               <div class="col-2">
@@ -29,9 +45,11 @@
               </div>
             </div>
             <!-- {{ checklist_dataList }} -->
-        </CListGroupItem>
+        </CListGroupItem> 
       </CListGroup>
-       <CButton type="button" color="primary" @click="onAddField"> Add </CButton>
+      <div class="float-right mt-4 mb-2">
+          <CButton type="button" color="primary" class="px-3 py-2" @click="onAddField"> Add </CButton>
+      </div>
     </CModal>
  
   </div>
@@ -67,7 +85,7 @@ export default {
     })
   },
 
-  created(){
+  mounted(){
     this.loadChecklist();
   },
 

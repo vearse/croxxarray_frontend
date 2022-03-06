@@ -52,9 +52,9 @@
                               <tr>
                                 <th class="inline-table-head"><div></div></th>
                                 <th class="inline-table-head"><div>Name</div></th>
-                                <th class="inline-table-head"><div>Qcp Ip</div></th>
-                                <th class="inline-table-head"><div>Description</div></th>
-                                <th class="inline-table-head"><div>Date Created</div></th>
+                                <th class="inline-table-head"><div>Subcomponents</div></th>
+                                <th class="inline-table-head"><div>CheckSheet</div></th>
+                                <th class="inline-table-head"><div>Status</div></th>
                                 <th class="inline-table-head"><div>Author</div></th>
                               </tr>
                             </thead>
@@ -77,11 +77,14 @@
                                       <label for="uid-ya7qse3inbb" class="custom-control-label">  </label>
                                     </div>
                                   </td>
-                                  <td @click="editItem(item)" class=""> {{item.name}} </td>
-                                  <td @click="editItem(item)" class=""> {{item.qcp_ip}} </td>
-                                  <td @click="editItem(item)" class=""> {{item.description}} </td>
-                                  <td @click="editItem(item)" class=""> {{ item.created_at  | moment("MMMM Do YYYY") }} </td>
-                                  <td @click="editItem(item)" class="">  <span v-if="item.author">{{item.author.firstname}} {{item.author.lastname}}</span>   </td>
+                                  <td  class=""> {{item.name}} </td>
+                                  <td  class=""> {{item.total_subcomponent}} </td>
+                                  <td  class=""> {{item.total_checksheet}} </td>
+                                  <td  class="">  </td>
+                                  <td class=""> 
+                                       <span v-if="item.author">{{item.author.firstname}} {{item.author.lastname}}</span>   <br>
+                                       {{ item.created_at  | moment("Do MMMM, YYYY H i") }}
+                                   </td>
                               </tr>
                             </tbody>
                           </table>

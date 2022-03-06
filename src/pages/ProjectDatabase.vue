@@ -153,7 +153,7 @@ export default {
          { link: 'clients', name: 'Clients', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
          { link: 'fields', name: 'Fields', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
          { link: 'platforms', name: 'Platforms', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
-         { link: 'wels', name: 'Wells', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
+         { link: 'wells', name: 'Wells', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
          { link: 'jobs', name: 'Job Types', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'},
          { link: 'completion', name: 'Completion Types', description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit'}
        ]

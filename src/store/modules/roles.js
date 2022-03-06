@@ -85,6 +85,7 @@ const storeModule = {
                 let response = await $http.get("configuration/roles", {
                     params: payload 
                 });
+                console.log('Loading ROle');
                 let responsePayload = response.data.data;
                 commit('SET_DATAGROUPED', response.data);
                 commit("SET_DATALIST", responsePayload);  
@@ -98,8 +99,6 @@ const storeModule = {
                 commit("SET_LOADING_DATALIST");
                 let response = await $http.post("configuration/roles", payload); 
                 let responsePayload = response.data;
-                
-                 console.log(payload)
                 commit("SET_DATALIST", responsePayload);
                 commit("SET_SUCCESS", responsePayload.message);  
             } catch (error) {

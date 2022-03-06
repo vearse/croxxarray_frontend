@@ -39,7 +39,7 @@
                         <div class=" float-right">
                           <CButton class="bg-croxx-secondary rounded-10p mr-3 w-24 shadow-sm">  <router-link :to="'/assembly/checklist/create'" class="card-link" > Create </router-link> </CButton>
                          
-                          <CButton class="bg-croxx-import rounded-10p w-24 shadow-sm" >Duplicate </CButton>
+                          <!-- <CButton class="bg-croxx-import rounded-10p w-24 shadow-sm" >Duplicate </CButton> -->
                         </div>
                       </div>
                   </div>
@@ -52,9 +52,8 @@
                               <tr>
                                 <th class="inline-table-head"><div></div></th>
                                 <th class="inline-table-head"><div>Name</div></th>
-                                <th class="inline-table-head"><div>Qcp Ip</div></th>
-                                <th class="inline-table-head"><div>Description</div></th>
-                                <th class="inline-table-head"><div>Date Created</div></th>
+                                <th class="inline-table-head"><div>Questions</div></th>
+                                <th class="inline-table-head"><div>Attn/Access</div></th>
                                 <th class="inline-table-head"><div>Author</div></th>
                               </tr>
                             </thead>
@@ -70,31 +69,36 @@
                               </tr>
                               <tr v-else
                                 
-                                  v-for="(item, i) in dataList" :key="i">
+                                  v-for="(item, i) in dataList" :key="i"> 
                                   <td >
                                     <div role="group" class="custom-control custom-checkbox">
                                       <input id="uid-ya7qse3inbb" type="checkbox" name="Option 1" class="custom-control-input" value="[object Object]">
                                       <label for="uid-ya7qse3inbb" class="custom-control-label">  </label>
                                     </div>
                                   </td>
-                                  <td @click="editItem(item)" class=""> {{item.name}} </td>
-                                  <td @click="editItem(item)" class=""> {{item.qcp_ip}} </td>
-                                  <td @click="editItem(item)" class=""> {{item.description}} </td>
-                                  <td @click="editItem(item)" class=""> {{ item.created_at  | moment("MMMM Do YYYY") }} </td>
-                                  <td @click="editItem(item)" class="">  <span v-if="item.author">{{item.author.firstname}} {{item.author.lastname}}</span>   </td>
-                              </tr>
+                                  <td class="">{{item.id}} {{item.name}} </td> 
+                                  <td class=""> {{item.total_questions}} </td> 
+                                  <td class=""> 
+                                      <div  v-for="(access) in item.checklist_access" :key="access.id">
+                                        <span class="mr-2">  {{access.name}}, </span>
+                                      </div>
+                                  </td> 
+                                  <td class=""> 
+                                       <span v-if="item.author">{{item.author.firstname}} {{item.author.lastname}}</span>   <br>
+                                       {{ item.created_at  | moment("Do MMMM, YYYY H i") }}
+                                   </td>
+                              </tr> 
                             </tbody>
-                          </table>
-
-                          <div class="my-3">
+                          </table> 
+ 
+                          <div class="my-3"> 
                             
                             <CPagination
                               :activePage.sync="tableFilters.page"
                               :pages="dataListLastPage"
-                              
                               v-on:update-activePage="handlePageChange"
                               :goto="true"
-                              align="end"
+                              align="end" 
                             />
                           </div>
                         </div>

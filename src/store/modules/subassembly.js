@@ -81,7 +81,7 @@ const storeModule = {
                 let response = await $http.get("templating/subassembly", {
                     params: payload 
                 });
-                let responsePayload = response.data.fields; 
+                let responsePayload = response.data.data; 
                 commit("SET_DATALIST", responsePayload);  
             } catch (error) {
               //

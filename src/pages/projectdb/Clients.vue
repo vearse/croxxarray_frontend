@@ -148,8 +148,7 @@
                 </CCol> 
               </CRow>
               <div class="py-3 float-right">
-                  <CButton type="submit" button="submit" 
-                      class="bg-primary text-white px-4 rounded-10p mr-3  shadow-sm">{{ (form.editmode) ? 'Update' : 'Save'  }} </CButton>
+                  <CButton type="submit" button="submit" class="bg-primary text-white px-4 rounded-10p mr-3  shadow-sm">{{ (form.editmode) ? 'Update' : 'Save'  }} </CButton>
               </div>
           </form>
       </validation-observer>
