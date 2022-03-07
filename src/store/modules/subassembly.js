@@ -73,7 +73,7 @@ const storeModule = {
           state.loadingDataList = false;
         }
     },
-
+ 
     actions: { 
         async list({ commit }, payload){
             try{
