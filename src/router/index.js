@@ -30,6 +30,7 @@ const JobTypes = () => import('@/pages/projectdb/JobTypes')
 const CompletionTypes = () => import('@/pages/projectdb/CompletionTypes')
 
 const Projects = () => import('@/pages/projects/Projects')
+const ProjectDetail = () => import('@/pages/projects/ProjectDetails')
 
 const CreateProject = () => import('@/pages/projects/CreateProject')
 const CreateChecklist = () => import('@/pages/assembly/CreateChecklist')
@@ -186,17 +187,24 @@ function configRoutes () {
         },
         {
           path: '/create/project',
-          name: 'Create Project',
+          name: 'CreateProject',
           component: CreateProject
+        }, 
+        
+        {
+          path: '/projects/:name',
+          name: 'ProjectDetail',
+          component: ProjectDetail
         },
+        
         {
           path: '/ongoing/project',
-          name: 'Ongoing Projects',
+          name: 'OngoingProjects',
           component: Projects
         },
         {
           path: '/other/project',
-          name: 'Other Projects',
+          name: 'OtherProjects',
           component: Projects
         },
         {
