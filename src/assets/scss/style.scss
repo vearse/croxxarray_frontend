@@ -7,7 +7,8 @@
 @import "custom";
 
  
-
+// Full Tailwind
+@import "~tailwindcss/dist/tailwind.min.css";
 .card-header:not(.content-center) > .c-icon:first-child {
   margin-right: 0.1rem;
   margin-top: 0.1rem;

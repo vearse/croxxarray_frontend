@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="mt-4">
-       <CButton type="button"  class="bg-blue-200 " @click="question.isquestion = true"> Add Questions <CIcon class="pl-2" name="cil-plus"/> </CButton>
+       <CButton type="button"  class="bg-gray-200 " @click="question.isquestion = true"> Add Questions  <v-icon name="plus-circle" scale="1.25" class="pl-2 pt-1"></v-icon></CButton>
     </div>
     <!-- Create -->
     <CModal

@@ -115,13 +115,13 @@
                             <div class="">
                                <div class="tab-members" style="height: 300px;">
                                 <CTabs>
-                                  <CTab  class="" style="mi-width:140px" title="Details" active>
+                                  <CTab  class="" style="min-width:140px" title="Details" active>
                                       <div>
                                         <draggable v-model="form.questions">
                                             <transition-group name="fade" tag="div" class="mt-3 instruments">
                                                 <div v-for="(question, id) in form.questions" :key="id">
                                                   <CListGroupItem 
-                                                      class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
+                                                      class="px-0 hover-shadow-sm bg-white border-none" style="height: 36px">
                                                       <div class="row mx-0">
                                                         <div class="col-5">
                                                           <p class="text-sm truncate">{{question.name}} </p>
@@ -132,12 +132,9 @@
                                                         <div class="col-2">
                                                           <p class="text-sm truncate"> {{question.unit}}</p>
                                                         </div>
-                                                        <div class="col-2">
-                                                          <p class="text-sm truncate"> 
-                                                            <CIcon class="pr-2" name="cil-cursor-move"/> 
-                                                            <CIcon class="pr-2" name="cil-trash"/> 
-                                                            <CIcon class="pr-2" name="cil-user"/> 
-                                                          </p>
+                                                        <div class="col-2 d-flex">
+                                                           <v-icon name="trash" class="mr-4"></v-icon>
+                                                           <v-icon name="arrows-alt" ></v-icon>
                                                         </div>
                                                       </div>
                                                     </CListGroupItem>
@@ -149,7 +146,7 @@
                                          <AddQuestion class="ml-3"  @newQuestion="loadNewQuestion"/> 
                                       </div>
                                   </CTab>
-                                  <CTab  class="" style="mi-width:140px" title="CheckSheet" >
+                                  <CTab  class="" style="min-width:140px" title="CheckSheet" >
                                       <div style="width: 70%">
                                         <draggable v-model="form.checksheet">
                                             <transition-group name="fade" tag="div" class="mt-3 instruments">
@@ -160,15 +157,13 @@
                                                         <div class="col-7">
                                                           <p class="text-sm truncate">{{checklist.name}} </p>
                                                         </div>
-                                                        <div class="col-4">
+                                                        <div class="col-3">
                                                           <p class="text-sm truncate"> {{checklist.type}}</p>
                                                         </div>
-                                                        <div class="col-2">
-                                                          <p class="text-sm truncate"> 
-                                                            <CIcon class="pr-2" name="cil-cursor-move"/> 
-                                                            <CIcon class="pr-2" name="cil-trash"/> 
-                                                            <CIcon class="pr-2" name="cil-user"/> 
-                                                          </p>
+                                                       
+                                                        <div class="col-2 d-flex">
+                                                           <v-icon name="trash" class="mr-4"></v-icon>
+                                                           <v-icon name="arrows-alt" ></v-icon>
                                                         </div>
                                                       </div>
                                                     </CListGroupItem>
@@ -304,7 +299,9 @@ export default {
         category: null,
         description: null,
 
-        questions: [],
+        questions: [
+          {name: "What is great", type: "checkbox"}
+        ],
         checksheet: [],
         access:[],
         approvers: [],
@@ -348,6 +345,10 @@ export default {
     loadNewQuestion(question){
       console.log(question);
       this.form.questions.push(question)
+    },
+
+    removeItem(i){
+      console.log(i);
     },
 
     loadFields(fields){

@@ -137,12 +137,9 @@
                                                 <div class="col-2">
                                                   <p class="text-sm truncate"> {{question.unit}}</p>
                                                 </div>
-                                                <div class="col-2">
-                                                  <p class="text-sm truncate"> 
-                                                    <CIcon class="pr-2" name="cil-cursor-move"/> 
-                                                    <CIcon class="pr-2" name="cil-trash"/> 
-                                                    <CIcon class="pr-2" name="cil-user"/> 
-                                                  </p>
+                                                <div class="col-2 d-flex">
+                                                    <v-icon name="trash" class="mr-4"></v-icon>
+                                                    <v-icon name="arrows-alt" ></v-icon>
                                                 </div>
                                               </div>
                                             </CListGroupItem>
@@ -208,8 +205,7 @@
                                   </CCol>
                                    <CCol sm="2">  
                                      <div v-if="i"> 
-                                      <CButton type="button"> <CIcon name="cil-trash"  class="mr-3"/> </CButton>
-                                      <CButton type="button"  @click="removeTeamList(i)"> <CIcon name="cil-user" /> </CButton>
+                                      <CButton type="button"  @click="removeTeamList(i)">   <v-icon name="trash" ></v-icon> </CButton>
                                      </div>
                                   </CCol>
                                 </CRow>

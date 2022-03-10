@@ -116,7 +116,7 @@
 
                             <div class="tab-members" style="height: 300px;">
                                 <CTabs>
-                                  <CTab  class="col text-center" title="Details" active>
+                                  <CTab  class="col " title="Details" active>
                                       <div class="my-2 text-left">
                                         <p class="text-xs text-italic">In this section you should add general input fields and measurement information item should include</p>
                                         <div class="ml-3">
@@ -128,45 +128,40 @@
                                             <input id="uid-kqjzgs10s7p" type="checkbox" v-model="form.is_details_editable" class="form-check-input" > Editable Only 
                                           </label>
                                         </div>
-                                        <div>
-                                          <draggable v-model="form.questions">
-                                              <transition-group name="fade" tag="div" class="mt-3 instruments">
-                                                  <div v-for="(question, id) in form.questions" :key="id">
-                                                    <CListGroupItem 
-                                                        class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
-                                                        <div class="row mx-0">
-                                                          <div class="col-5">
-                                                            <p class="text-sm truncate">{{question.name}} </p>
+                                          <div>
+                                            <draggable v-model="form.questions">
+                                                <transition-group name="fade" tag="div" class="mt-3 instruments">
+                                                    <div v-for="(question, id) in form.questions" :key="id">
+                                                      <CListGroupItem 
+                                                          class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
+                                                          <div class="row mx-0">
+                                                            <div class="col-5">
+                                                              <p class="text-sm truncate">{{question.name}} </p>
+                                                            </div>
+                                                            <div class="col-3">
+                                                              <p class="text-sm truncate"> {{question.type}}</p>
+                                                            </div> 
+                                                            <div class="col-2">
+                                                              <p class="text-sm truncate"> {{question.unit}}</p>
+                                                            </div>
+                                                            <div class="col-2 d-flex">
+                                                              <v-icon name="trash" class="mr-4"></v-icon>
+                                                              <v-icon name="arrows-alt" ></v-icon>
+                                                            </div>
                                                           </div>
-                                                          <div class="col-3">
-                                                            <p class="text-sm truncate"> {{question.type}}</p>
-                                                          </div>
-                                                          <div class="col-2">
-                                                            <p class="text-sm truncate"> {{question.unit}}</p>
-                                                          </div>
-                                                          <div class="col-2">
-                                                            <p class="text-sm truncate"> 
-                                                              <CIcon class="pr-2" name="cil-cursor-move"/> 
-                                                              <CIcon class="pr-2" name="cil-trash"/> 
-                                                              <CIcon class="pr-2" name="cil-user"/> 
-                                                            </p>
-                                                          </div>
-                                                        </div>
-                                                      </CListGroupItem>
-                                                  </div>
-                                              </transition-group>
-                                          </draggable>
-                                        </div>
+                                                        </CListGroupItem>
+                                                    </div>
+                                                </transition-group>
+                                            </draggable>
+                                          </div>
                                           <div class="d-flex my-3 justify-content-left">
                                             <AddQuestion class="ml-3"  @newQuestion="loadNewQuestion"/> 
                                           </div>
                                       </div>
-                                      <!-- <div class=" my-3 justify-content-center">
-                                        <CButton type="button"  class="text-blue bg-transparent"> Add Fields <CIcon class="pl-2" name="cil-plus"/> </CButton>
-                                      </div>  -->
+
                                   </CTab>
-                                  <CTab  class="col text-center" title="CheckSheet" >
-                                    
+                                  <!-- CheckSheet Tab -->
+                                  <CTab  class="col " title="CheckSheet" >
                                       <div class="mt-2  text-left">
                                           <div class="ml-3">
                                             <p class="text-xs text-italic">In this section you should add general input fields and measurement information item should include</p>
@@ -182,18 +177,16 @@
                                                   <CListGroupItem 
                                                       class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
                                                       <div class="row mx-0">
-                                                        <div class="col-6">
+                                                        <div class="col-7">
                                                           <p class="text-sm truncate">{{checklist.name}} </p>
                                                         </div>
-                                                        <div class="col-4">
-                                                          <p class="text-sm truncate"> {{checklist.id}}</p>
+                                                        <div class="col-3">
+                                                          <!-- <p class="text-sm truncate"> {{checklist.id}}</p> -->
                                                         </div>
-                                                        <div class="col-2">
-                                                          <p class="text-sm truncate"> 
-                                                            <CIcon class="pr-2" name="cil-cursor-move"/> 
-                                                            <CIcon class="pr-2" name="cil-trash"/> 
-                                                            <CIcon class="pr-2" name="cil-user"/> 
-                                                          </p>
+                                                       
+                                                        <div class="col-2 d-flex">
+                                                           <v-icon name="trash" class="mr-4"></v-icon>
+                                                           <v-icon name="arrows-alt" ></v-icon>
                                                         </div>
                                                       </div>
                                                     </CListGroupItem>
@@ -205,8 +198,45 @@
                                         <AddField class="ml-3"  @addChecklist="loadChecksheet"/> 
                                       </div>
                                   </CTab>
-                                  <CTab  class="col text-center" title="Approvals" >
-                                      <div class=""></div>
+                                  <!-- Approval Tab -->
+                                  <CTab  class="col " title="Approvals" >
+                                        <div class="mt-2  text-left">
+                                            <div class="ml-3">
+                                              <p class="text-xs text-italic">In this section you should add general input fields and measurement information item should include</p>
+                                              <label for="uid-kqjzgs10s7p" class="form-check-label" >
+                                                <input id="uid-kqjzgs10s7p" type="checkbox" v-model="form.is_approvals_strict" class="form-check-input" > Strict Only 
+                                              </label>
+                                            </div>
+                                        </div> 
+                                        <div>
+                                          <draggable v-model="form.approvals">
+                                              <transition-group name="fade" tag="div" class="mt-3 instruments">
+                                                  <div v-for="(question, id) in form.approvals" :key="id">
+                                                    <CListGroupItem 
+                                                        class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
+                                                        <div class="row mx-0">
+                                                          <div class="col-5">
+                                                            <p class="text-sm truncate">{{question.name}} </p>
+                                                          </div>
+                                                          <div class="col-3">
+                                                            <p class="text-sm truncate"> {{question.type}}</p>
+                                                          </div> 
+                                                          <div class="col-2">
+                                                            <p class="text-sm truncate"> {{question.unit}}</p>
+                                                          </div>
+                                                          <div class="col-2 d-flex">
+                                                            <v-icon name="trash" class="mr-4"></v-icon>
+                                                            <v-icon name="arrows-alt" ></v-icon>
+                                                          </div>
+                                                        </div>
+                                                      </CListGroupItem>
+                                                  </div>
+                                              </transition-group>
+                                          </draggable>
+                                        </div>
+                                        <div class="d-flex my-3 justify-content-left">
+                                          <AddQuestion class="ml-3"  @newQuestion="loadNewApproval"/> 
+                                        </div>
                                   </CTab>
                                 </CTabs>
                             </div>
@@ -222,18 +252,15 @@
                                                   <CListGroupItem 
                                                       class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
                                                       <div class="row mx-0">
-                                                        <div class="col-6">
+                                                        <div class="col-7">
                                                           <p class="text-sm truncate">{{checklist.name}} </p>
                                                         </div>
-                                                        <div class="col-4">
-                                                          <p class="text-sm truncate"> {{checklist.id}}</p>
+                                                        <div class="col-3">
+                                                          <!-- <p class="text-sm truncate"> {{checklist.id}}</p> -->
                                                         </div>
-                                                        <div class="col-2">
-                                                          <p class="text-sm truncate"> 
-                                                            <CIcon class="pr-2" name="cil-cursor-move"/> 
-                                                            <CIcon class="pr-2" name="cil-trash"/> 
-                                                            <CIcon class="pr-2" name="cil-user"/> 
-                                                          </p>
+                                                        <div class="col-2 d-flex">
+                                                          <v-icon name="trash" class="mr-4"></v-icon>
+                                                          <v-icon name="arrows-alt" ></v-icon>
                                                         </div>
                                                       </div>
                                                     </CListGroupItem>
@@ -285,12 +312,9 @@
                                                         <div class="col-4">
                                                           <p class="text-sm truncate"> {{checklist.id}}</p>
                                                         </div>
-                                                        <div class="col-2">
-                                                          <p class="text-sm truncate"> 
-                                                            <CIcon class="pr-2" name="cil-cursor-move"/> 
-                                                            <CIcon class="pr-2" name="cil-trash"/> 
-                                                            <CIcon class="pr-2" name="cil-user"/> 
-                                                          </p>
+                                                        <div class="col-2 d-flex">
+                                                          <v-icon name="trash" class="mr-4"></v-icon>
+                                                          <v-icon name="arrows-alt" ></v-icon>
                                                         </div>
                                                       </div>
                                                     </CListGroupItem>
@@ -433,7 +457,7 @@ export default {
         questions: [],
         checksheet: [],
         subcomponent: [],
-        approvers: [],
+        approvals: [],
         makeups: []
       },
 
@@ -491,6 +515,10 @@ export default {
     
     loadNewQuestion(question){
       this.form.questions.unshift(question)
+    },
+
+    loadNewApproval(question){
+       this.form.approvals.unshift(question)
     },
 
     createMakeupProcess(){

@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    <div class="mt-=4">
-        <CButton type="button"  class="text-blue bg-transparent" @click="isfield=true"> Add Subcomponent <CIcon class="pl-2" name="cil-plus"/> </CButton>
+    <div class="mt-4">
+        <CButton type="button"  class="text-blue bg-gray-200" @click="isfield=true"> Add Subcomponent <v-icon name="plus-circle" scale="1.25" class="pl-2 pt-1"></v-icon> </CButton>
        <!-- <CButton type="button"  class="bg-blue-200 " @click="question.isquestion = true"> Add Questions <CIcon class="pl-2" name="cil-plus"/> </CButton> -->
     </div>
     <!-- Create -->
@@ -26,7 +26,7 @@
                   </template>
                 </CInput>
               </span>
-            </div>
+            </div> 
         </div>
         <CListGroupItem v-for="(subcomponent, i) in subcomponent_dataList" :key="subcomponent.id"
           :class="{'bg-blue-200 ' : fields.includes(subcomponent.id) , 'bg-white': !fields.includes(subcomponent.id)}"
@@ -38,7 +38,7 @@
                 <h5 class="font-bold">{{subcomponent.name}}</h5>
               </div>
               <div class="col-3">
-                <h5 class="font-bold"> {{subcomponent.id}}</h5>
+                <!-- <h5 class="font-bold"> {{subcomponent.id}}</h5> -->
               </div>
               <div class="col-2">
                 <h5 class="font-bold"> </h5>

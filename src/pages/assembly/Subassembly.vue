@@ -39,7 +39,7 @@
                         <div class=" float-right">
                           <CButton class="bg-croxx-secondary rounded-10p mr-3 w-24 shadow-sm">  <router-link :to="'/assembly/subassembly/create'" class="card-link" > Create </router-link> </CButton>
                          
-                          <CButton class="bg-croxx-import rounded-10p w-24 shadow-sm" >Duplicate </CButton>
+                          <!-- <CButton class="bg-croxx-import rounded-10p w-24 shadow-sm" >Duplicate </CButton> -->
                         </div>
                       </div>
                   </div>
