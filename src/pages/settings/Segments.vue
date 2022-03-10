@@ -60,7 +60,7 @@
           <form  @submit.prevent="form.editmode ? handleSubmit(updateComponentRecord) : handleSubmit(createNewComponent)">
               <CRow>
                 <CCol sm="12">
-                  <validation-provider   name="Name" rules="required"
+                  <validation-provider   name="Name" rules="required|min:3"
                     v-slot="validationContext">
                     <CInput
                       v-model="form.name" label="Name" 

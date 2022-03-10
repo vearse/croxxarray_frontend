@@ -3,7 +3,8 @@
 @import "../../node_modules/tailwindcss/utilities.css"; */
   
 
-
+/* // Import styles */
+/* @import "~tailwindcss/dist/tailwind.min.css"; */
 
 .btn-main{
     @apply text-white bg-green-500 hover:bg-green-700;

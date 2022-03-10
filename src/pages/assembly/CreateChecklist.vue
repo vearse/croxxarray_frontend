@@ -205,7 +205,9 @@
                                   </CCol>
                                    <CCol sm="2">  
                                      <div v-if="i"> 
-                                      <CButton type="button"  @click="removeTeamList(i)">   <v-icon name="trash" ></v-icon> </CButton>
+                                      <CButton type="button" class="pt-5"  @click="removeTeamList(i)"> 
+                                          <v-icon name="trash"></v-icon> 
+                                      </CButton>
                                      </div>
                                   </CCol>
                                 </CRow>

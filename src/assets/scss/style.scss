@@ -1,14 +1,15 @@
 // If you want to override variables do it here
 @import "variables";
 
-// Import styles
+
+
 @import "~@coreui/coreui/scss/coreui";
 // If you want to add something do it here
 @import "custom";
 
  
 // Full Tailwind
-@import "~tailwindcss/dist/tailwind.min.css";
+
 .card-header:not(.content-center) > .c-icon:first-child {
   margin-right: 0.1rem;
   margin-top: 0.1rem;
@@ -17,9 +18,6 @@
   height: 1.2rem;
   font-size: 1.2rem;
 }
-// .c-active{
-
-// }
 
 .c-active, .c-sidebar.c-sidebar-light .c-sidebar-nav-link:hover, .c-sidebar.c-sidebar-light .c-sidebar-nav-dropdown-toggle:hover {
     color: #000 !important;

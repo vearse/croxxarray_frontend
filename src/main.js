@@ -12,6 +12,7 @@ import  axios from'./plugins/axios'
 Vue.prototype.$http = axios;
 import store from './store'
 
+import './assets/tailwind.min.css'
 import './assets/tailwind.css'
 import './registerServiceWorker'
 
