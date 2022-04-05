@@ -98,7 +98,7 @@ export default {
     return {
      input_types: [
         { value: 'textbox', label: 'Textbox Input'}, 
-        { value: 'radio', label: 'Radio'}, 
+        { value: 'radio', label: 'Choice'}, 
         { value: 'checkbox', label: 'Checkbox '}, 
         { value: 'upload', label: 'Upload '}, 
         { value: 'textarea', label: 'Textarea Input'}, 

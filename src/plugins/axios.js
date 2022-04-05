@@ -13,7 +13,9 @@ const $axios = axios.create({
     "Access-Control-Allow-Origin": "*" 
   }
 });
-console.log(config.apiUrl);
+
+// console.log(config.apiUrl);
+
 // Add access token to header if any
 const accessToken = Cookies.get(config.accessTokenStorageKey);
 // console.log('Token ',accessToken);

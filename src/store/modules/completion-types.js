@@ -154,7 +154,7 @@ const storeModule = {
             commit("SET_ERROR", "Internal connection error, please try again.");
           }
         },
-
+ 
         // Delete action
         async delete({ commit }, id) {
           commit("SET_LOADING");

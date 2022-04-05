@@ -96,6 +96,8 @@
                             </div>
                         </div>
                       </CTab>
+
+
                       <CTab> 
                         <template slot="title">
                           <span class="">{{tabs[1]}}</span> 
@@ -118,9 +120,10 @@
                             </div>
                         </div>
                       </CTab>
+                      
                       <CTab>
                         <template slot="title">
-                          {{tabs[2]}} 
+                          {{tabs[2]}}  
                           <v-icon name="circle" class="dot-mode float-right "></v-icon>
                         </template>
                         
@@ -247,7 +250,7 @@ export default {
             this.$router.push({ name: "" });
             let msg = this.success;
             this.$swal.fire("", msg, "success").then(function() {
-              // console.log(vm.success);
+              // console.log(vm.success); 
             });
           } else { 
             this.$refs.form.setErrors(this.validationErrors); // set VeeValidation error

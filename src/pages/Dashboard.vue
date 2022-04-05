@@ -59,67 +59,30 @@
                 <CListGroup  class="my-1">
                   <CListGroupItem class="rounded-md bg-white my-1 ">
                     <div class="row mx-0">
-                      <div class="col-6">
+                      <div class="col-8">
                         <h5 class="font-bold">Project Name</h5>
                       </div>
-                      <div class="col-6">
-                        <h5 class="font-bold"> Task Assigned</h5>
+                      <div class="col-4">
+                        <h5 class="font-bold"> Task</h5>
                       </div>
                     </div>
                   </CListGroupItem>
                           
                   <!-- <CListGroupItem color="secondary" accent="secondary" >This is a secondary list group item</CListGroupItem> -->
 
-                  <CListGroupItem  class="rounded-md bg-white my-1 hover-shadow-sm">
+                  <CListGroupItem  v-for="task in taskList" :key="task.id"
+                    class="rounded-md bg-white my-1 hover-shadow-sm">
                     <div class="row mx-0">
-                      <div class="col-6">
-                        <h5 class="">Dapibus ac facilisis in </h5>
-                      </div>
-                      <div class="col-6">
-                        <h5 class=""> Dapibus ac Assigned</h5>
-                      </div>
+                      <router-link :to="'/projects/'+task.id">
+                        <div class="col-8">
+                          <h5 class="">{{task.well_id}} </h5>
+                        </div>
+                        <div class="col-4"> 
+                          <h5 class=""> Dapibus</h5>
+                        </div>
+                      </router-link>
                     </div>
-                  </CListGroupItem>
-                  <CListGroupItem class="rounded-md bg-white my-1 hover-shadow-sm">
-                    <div class="row mx-0">
-                      <div class="col-6">
-                        <h5 class="">Morbi leo risus </h5>
-                      </div>
-                      <div class="col-6">
-                        <h5 class=""> Dapibus ac Assigned</h5>
-                      </div>
-                    </div>
-                  </CListGroupItem>
-                  <CListGroupItem class="rounded-md bg-white my-1 hover-shadow-sm">
-                    <div class="row mx-0">
-                      <div class="col-6">
-                        <h5 class="">Porta ac consectetur ac </h5>
-                      </div>
-                      <div class="col-6">
-                        <h5 class=""> Dapibus ac Assigned</h5>
-                      </div>
-                    </div>
-                  </CListGroupItem>
-                  <CListGroupItem color="primary" accent="primary" class="rounded-md bg-white my-1 hover-shadow-sm">
-                    <div class="row mx-0">
-                      <div class="col-6">
-                        <h5 class="">Porta ac consectetur ac </h5>
-                      </div>
-                      <div class="col-6">
-                        <h5 class=""> Dapibus ac Assigned</h5>
-                      </div>
-                    </div>
-                  </CListGroupItem>
-                  <CListGroupItem class="rounded-md bg-white my-1 hover-shadow-sm">
-                    <div class="row mx-0">
-                      <div class="col-6">
-                        <h5 class="">Porta ac consectetur ac </h5>
-                      </div>
-                      <div class="col-6">
-                        <h5 class=""> Dapibus ac Assigned</h5>
-                      </div>
-                    </div>
-                  </CListGroupItem>
+                   </CListGroupItem>
                 </CListGroup>
               </div>
             </div>
@@ -324,6 +287,7 @@
 
 
 <script>
+import { mapState } from 'vuex';
 
 export default { 
   name: 'Dashboard',
@@ -339,6 +303,15 @@ export default {
         {name: 'Users', total: 900, icon: 'cil-user'}, 
         {name: 'Template', total: 1370, icon: 'cil-view'},
       ],
+
+      taskList: [],
+      tableFilters: {
+        per_page: 25,
+        page: 1, 
+        search: null,
+        sort_by: "created_at",
+        sort_dir: "desc"
+      },
 
       masks: {
         weekdays: 'WWW',
@@ -371,6 +344,25 @@ export default {
       ]
     }
   },
+
+  computed: {
+      ...mapState("projects", {
+        loading: state =>state.loading,
+        loadingDataList: state =>state.loadingDataList,
+        error: state => state.error,
+        success: state => state.success,
+        validationErrors: state => state.validationErrors,
+        data: state => state.data,
+        dataList: state =>state.dataList,
+        dataListTotal: state => state.dataListTotal,
+        dataListLastPage: state => state.dataListLastPage,
+      })
+  },
+  
+  mounted() {
+    this.loadUserTask();
+  },
+
   methods: {
     color (value) {
       let $color
@@ -384,6 +376,21 @@ export default {
         $color = 'danger'
       }
       return $color
+    },
+
+    loadUserTask(){
+      let payload = {
+        per_page: 6,
+        page: 1, 
+        search: null,
+        sort_by: "created_at",
+        sort_dir: "desc"
+      }
+      this.$store.dispatch('projects/list', payload)
+      .then((data) => {
+        console.log(data);
+        this.taskList = this.$store.state.projects.dataList;
+      });
     }
   }
 }
