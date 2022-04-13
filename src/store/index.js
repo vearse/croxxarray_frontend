@@ -22,6 +22,7 @@ import checklist from "./modules/checklist";
 import subcomponent from "./modules/subcomponent";
 import subassembly from "./modules/subassembly";
 import projects from "./modules/projects";
+import users from "./modules/users";
 
 const state = {
   sidebarShow: 'responsive',
@@ -48,6 +49,7 @@ export default new Vuex.Store({
 
   modules: {
     auth,
+    users,
     groups,
     roles,
     segments,

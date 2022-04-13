@@ -37,6 +37,13 @@ const CreateChecklist = () => import('@/pages/assembly/CreateChecklist')
 const CreateSubcomponent = () => import('@/pages/assembly/CreateSubcomponent')
 const CreateSubassembly = () => import('@/pages/assembly/CreateSubassembly')
 
+
+// Users
+const Users = () => import('@/pages/croxxarray/Users')
+const User = () => import('@/pages/croxxarray/User')
+const CreateUser = () => import('@/pages/croxxarray/CreateUser')
+
+
 // Views - Components
 const Widgets = () => import('@/views/widgets/Widgets')
 const Cards = () => import('@/views/base/Cards') 
@@ -78,10 +85,6 @@ const Logout = () => import('@/pages/guest/Logout')
 const Page404 = () => import('@/views/pages/Page404')
 const Page500 = () => import('@/views/pages/Page500')
 const Register = () => import('@/views/pages/Register')
-
-// Users
-const Users = () => import('@/views/users/Users')
-const User = () => import('@/views/users/User')
 
 Vue.use(Router)
 
@@ -189,6 +192,11 @@ function configRoutes () {
           path: '/create/project',
           name: 'CreateProject',
           component: CreateProject
+        }, 
+        {
+          path: '/create/user',
+          name: 'CreateUser',
+          component: CreateUser
         }, 
         
         {

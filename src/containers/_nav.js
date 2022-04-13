@@ -120,7 +120,7 @@ export default [
       {
         _name: 'CSidebarNavItem',
         name: 'Users',
-        to: '/charts',
+        to: '/users',
         icon: 'cil-user'
       },
       {
