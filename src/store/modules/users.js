@@ -97,7 +97,7 @@ const storeModule = {
                 commit("SET_SUCCESS", responsePayload.message);  
             } catch (error) {
               console.log(error); 
-              if (error && error.data) {
+              if (error && error.data) { 
                 let errorPayload = error.data; 
                 // console.log(errorPayload);
                 if (errorPayload.message) { 

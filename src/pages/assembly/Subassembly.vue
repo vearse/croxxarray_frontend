@@ -80,7 +80,7 @@
                                   <td  class=""> {{item.name}} </td>
                                   <td  class=""> {{item.total_subcomponent}} </td>
                                   <td  class=""> {{item.total_checksheet}} </td>
-                                  <td  class="">  </td>
+                                  <td  class=""> {{ item.status }} </td>
                                   <td class=""> 
                                        <span v-if="item.author">{{item.author.firstname}} {{item.author.lastname}}</span>   <br>
                                        {{ item.created_at  | moment("Do MMMM, YYYY H i") }}

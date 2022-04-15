@@ -35,6 +35,22 @@
                                   </validation-provider>
                               </CCol> 
                             </CRow>
+
+                            <CRow>
+                              <CCol sm="12">
+                                  <validation-provider name="Status" rules="required" v-slot="validationContext">
+                                      <CSelect 
+                                        label="Status"  label-class="required"
+                                        :value.sync="form.status"
+                                        :invalid-feedback="validationContext.errors[0]"
+                                        :class="{ 'is-invalid': validationContext.errors[0] }"
+                                        :options="assembly_status"
+                                        placeholder="Select Status"
+                                      />
+                                    <span class="text-error" v-if="validationContext.errors[0]">{{validationContext.errors[0]}}</span>
+                                  </validation-provider>
+                              </CCol> 
+                            </CRow>
                             
                             <CRow class="mt-2">
                               <CCol sm="12">
@@ -442,11 +458,15 @@ export default {
       subcomponent: [],
       makeup_fields: [],
       active_makeup: 0,
+      assembly_status: [
+        { value: 'active', label: 'Active' },
+        { value: 'draft', label: 'Draft' },
+      ],
 
       form : {
         name: '',
         description: '',
-        // shortname: '',
+        status: '',
         segments: [],
 
         is_details_strict: 0,

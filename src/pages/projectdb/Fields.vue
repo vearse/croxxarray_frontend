@@ -8,7 +8,7 @@
             <div class="col-4"> 
                 <span class="float-right">
                    <CButton class="bg-croxx-secondary rounded-10p mr-3 w-24 shadow-sm" @click="createModal = true">Create</CButton>
-                   <CButton class="bg-croxx-import rounded-10p w-24 shadow-sm" >Import </CButton>
+                   <!-- <CButton class="bg-croxx-import rounded-10p w-24 shadow-sm" >Import </CButton> -->
                 </span>
             </div>
         </div>  

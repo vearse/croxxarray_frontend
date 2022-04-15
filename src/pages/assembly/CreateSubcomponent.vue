@@ -35,6 +35,7 @@
                                   </validation-provider>
                               </CCol> 
                               
+                              
                               <CCol sm="12">
                                   <validation-provider name="Shortname" rules="required" v-slot="validationContext">
                                       <CInput 
@@ -113,75 +114,76 @@
                             </p>
                             <h4 class="h4 py-2 bold"> Inclusions</h4>
                             <div class="">
-                               <div class="tab-members" style="height: 300px;">
-                                <CTabs>
-                                  <CTab  class="" style="min-width:140px" title="Details" active>
-                                      <div>
-                                        <draggable v-model="form.questions">
-                                            <transition-group name="fade" tag="div" class="mt-3 instruments">
-                                                <div v-for="(question, id) in form.questions" :key="id">
-                                                  <CListGroupItem 
-                                                      class="px-0 hover-shadow-sm bg-white border-none" style="height: 36px">
-                                                      <div class="row mx-0">
-                                                        <div class="col-5">
-                                                          <p class="text-sm truncate">{{question.name}} </p>
-                                                        </div>
-                                                        <div class="col-3">
-                                                          <p class="text-sm truncate"> {{question.type}}</p>
-                                                        </div>
-                                                        <div class="col-2">
-                                                          <p class="text-sm truncate"> {{question.unit}}</p>
-                                                        </div>
-                                                        <div class="col-2 d-flex">
-                                                           <v-icon name="trash" class="mr-4"></v-icon>
-                                                           <v-icon name="arrows-alt" ></v-icon>
-                                                        </div>
-                                                      </div>
-                                                    </CListGroupItem>
-                                                </div>
-                                            </transition-group>
-                                        </draggable>
-                                      </div>
-                                      <div class="d-flex my-3 justify-content-left">
-                                         <AddQuestion class="ml-3"  @newQuestion="loadNewQuestion"/> 
-                                      </div>
-                                  </CTab>
-                                  <CTab  class="" style="min-width:140px" title="CheckSheet" >
-                                      <div style="width: 70%">
-                                        <draggable v-model="form.checksheet">
-                                            <transition-group name="fade" tag="div" class="mt-3 instruments">
-                                                <div v-for="(checklist, id) in checksheet" :key="id">
-                                                  <CListGroupItem 
-                                                      class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
-                                                      <div class="row mx-0">
-                                                        <div class="col-7">
-                                                          <p class="text-sm truncate">{{checklist.name}} </p>
-                                                        </div>
-                                                        <div class="col-3">
-                                                          <p class="text-sm truncate"> {{checklist.type}}</p>
-                                                        </div>
-                                                       
-                                                        <div class="col-2 d-flex">
-                                                           <v-icon name="trash" class="mr-4"></v-icon>
-                                                           <v-icon name="arrows-alt" ></v-icon>
-                                                        </div>
-                                                      </div>
-                                                    </CListGroupItem>
-                                                </div>
-                                            </transition-group>
-                                        </draggable>
-                                      </div>
-                                      <div class="d-flex my-3 justify-content-left">
-                                        <AddField class="ml-3"  @addChecklist="loadFields"/> 
-                                      </div>
-                                  </CTab>
-                                </CTabs>
-                            </div>
+                                <div class="tab-members" style="height: 300px;">
+                                  <CTabs>
 
+                                    <CTab  class="" style="min-width:140px" title="Details" active>
+                                        <div>
+                                          <draggable v-model="form.questions">
+                                              <transition-group name="fade" tag="div" class="mt-3 instruments">
+                                                  <div v-for="(question, id) in form.questions" :key="id">
+                                                    <CListGroupItem 
+                                                        class="px-0 hover-shadow-sm bg-white border-none" style="height: 36px">
+                                                        <div class="row mx-0">
+                                                          <div class="col-5">
+                                                            <p class="text-sm truncate">{{question.name}} </p>
+                                                          </div>
+                                                          <div class="col-3">
+                                                            <p class="text-sm truncate"> {{question.type}}</p>
+                                                          </div>
+                                                          <div class="col-2">
+                                                            <p class="text-sm truncate"> {{question.unit}}</p>
+                                                          </div>
+                                                          <div class="col-2 d-flex">
+                                                            <v-icon name="trash" class="mr-4"></v-icon>
+                                                            <v-icon name="arrows-alt" ></v-icon>
+                                                          </div>
+                                                        </div>
+                                                      </CListGroupItem>
+                                                  </div>
+                                              </transition-group>
+                                          </draggable>
+                                        </div>
+                                        <div class="d-flex my-3 justify-content-left">
+                                          <AddQuestion class="ml-3"  @newQuestion="loadNewQuestion"/> 
+                                        </div>
+                                    </CTab>
 
-                              <div class="mt-4 flex justify-content-end">
-                                  <CButton type="button"  color="primary" @click="activeTab = 2"> Next Step </CButton>
+                                    <CTab  class="" style="min-width:140px" title="CheckSheet" >
+                                        <div style="width: 70%">
+                                          <draggable v-model="form.checksheet">
+                                              <transition-group name="fade" tag="div" class="mt-3 instruments">
+                                                  <div v-for="(checklist, id) in checksheet" :key="id">
+                                                    <CListGroupItem 
+                                                        class="px-0 hover-shadow-sm bg-transparent border-none" style="height: 36px">
+                                                        <div class="row mx-0">
+                                                          <div class="col-7">
+                                                            <p class="text-sm truncate">{{checklist.name}} </p>
+                                                          </div>
+                                                          <div class="col-3">
+                                                            <p class="text-sm truncate"> {{checklist.type}}</p>
+                                                          </div>
+                                                        
+                                                          <div class="col-2 d-flex">
+                                                            <v-icon name="trash" class="mr-4"></v-icon>
+                                                            <v-icon name="arrows-alt" ></v-icon>
+                                                          </div>
+                                                        </div>
+                                                      </CListGroupItem>
+                                                  </div>
+                                              </transition-group>
+                                          </draggable>
+                                        </div>
+                                        <div class="d-flex my-3 justify-content-left">
+                                          <AddField class="ml-3"  @addChecklist="loadFields"/> 
+                                        </div>
+                                    </CTab>
+                                  </CTabs>
                               </div>
+
+                                <div class="mt-4 flex justify-content-end">
+                                    <CButton type="button"  color="primary" @click="activeTab = 2"> Next Step </CButton>
+                                </div>
                             </div>
                         </div>
                       </CTab>

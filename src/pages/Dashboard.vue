@@ -60,7 +60,7 @@
                   <CListGroupItem class="rounded-md bg-white my-1 ">
                     <div class="row mx-0">
                       <div class="col-8">
-                        <h5 class="font-bold">Project Name</h5>
+                        <h5 class="font-bold">Project</h5>
                       </div>
                       <div class="col-4">
                         <h5 class="font-bold"> Task</h5>
@@ -72,16 +72,16 @@
 
                   <CListGroupItem  v-for="task in taskList" :key="task.id"
                     class="rounded-md bg-white my-1 hover-shadow-sm">
-                    <div class="row mx-0">
-                      <router-link :to="'/projects/'+task.id">
-                        <div class="col-8">
-                          <h5 class="">{{task.well_id}} </h5>
-                        </div>
-                        <div class="col-4"> 
-                          <h5 class=""> Dapibus</h5>
+                      <router-link :to="'/projects/'+task.id" class="card-link">
+                        <div class="row mx-0">
+                            <div class="col-8">
+                              <h5 class="">{{task.code}} </h5>
+                            </div>
+                            <div class="col-4"> 
+                              <h5 class=""> Dapibus</h5>
+                            </div>
                         </div>
                       </router-link>
-                    </div>
                    </CListGroupItem>
                 </CListGroup>
               </div>
@@ -97,7 +97,7 @@
                   <CListGroupItem class="rounded-md bg-white my-1 ">
                     <div class="row mx-0">
                       <div class="col-6">
-                        <h5 class="font-bold">Project Name</h5>
+                        <h5 class="font-bold">Project</h5>
                       </div>
                       <div class="col-6">
                         <h5 class="font-bold"> Task Assigned</h5>

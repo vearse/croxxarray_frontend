@@ -111,8 +111,8 @@
                             <div class="d-flex">
                                <!-- <CButton type="button"  class="mr-3 bg-blue-200 "> Add Equipments <CIcon class="pl-2" name="cil-check-circle"/> </CButton> -->
                                <AddSubcomponent class="mr-3" @addSubcomponent="loadEquipments" /> 
-                               <CButton type="button"  class="mr-3" color="primary"> Import Backup <CIcon class="pl-2" name="cil-uploads"/> </CButton>
-                               <CButton type="button"  class="mr-3 bg-gray-100"> <CIcon class="pl-2" name="cil-check-cicle"/> </CButton>
+                               <CButton type="button"  class="mt-4 mr-3" color="primary"> Import Backup <CIcon class="pl-2" name="cil-uploads"/> </CButton>
+                               <CButton type="button"  class="mt-4 mr-3 bg-gray-100"> <CIcon class="pl-2" name="cil-check-cicle"/> </CButton>
                             </div>
                             
                             <div class="flex justify-content-end mt-5">
@@ -155,7 +155,7 @@
                                             :class="{ 'is-invalid': validationContext.errors[0] }"
                                             v-model="team.employee" id="uid-mu3370ovqhi" vertical="" class="form-control form-control-lg">
                                             <option value="" selected="selected"> Select Employee </option> 
-                                            <option :key="employee.id" :value="employee.id" v-for="employee in employees" >{{employee.name}} </option>
+                                            <option :key="employee.id" :value="employee.id" v-for="employee in employees" >{{employee.firstname}} {{employee.lastname}} </option>
                                         </select>
                                           <br>
                                           <span class="text-error" v-if="validationContext.errors[0]">{{validationContext.errors[0]}}</span>
@@ -164,7 +164,7 @@
                                 </CRow>
                             </div>
                             <div class="flex my-3 justify-content-center">
-                              <CButton type="button"  class="bg-blue-200 " @click="form.teams.unshift({name: '', employee: ''})"> Add Team <CIcon class="pl-2" name="cil-plus"/> </CButton>
+                              <CButton type="button"  class="bg-blue-200 " @click="form.teams.push({name: '', employee: ''})"> Add Team <CIcon class="pl-2" name="cil-plus"/> </CButton>
                             </div>
                              <div class="flex justify-content-end mt-5">
                                 <CButton type="submit"  color="primary"> Submit </CButton>
@@ -204,7 +204,7 @@ export default {
       activeTab: 0,
       roles: Object.values(this.$store.state.roles.dataList),
       wells: Object.values(this.$store.state.wells.dataList),
-      employees: Object.values(this.$store.state.groups.dataList),
+      employees: Object.values(this.$store.state.users.dataList),
       job_types: Object.values(this.$store.state.jobTypes.dataList),
       
       form : {

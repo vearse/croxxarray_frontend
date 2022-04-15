@@ -9,7 +9,7 @@
           <CDataTable
             hover
             striped
-            :items="items"
+            :items="users"
             :fields="fields"
             :items-per-page="5"
             clickable-rows
@@ -34,6 +34,7 @@
 
 <script>
 import usersData from './UsersData'
+
 export default {
   name: 'Users',
   data () {
@@ -58,11 +59,13 @@ export default {
       }
     }
   },
+
   methods: {
+
     getBadge (status) {
       switch (status) {
         case 'Active': return 'success'
-        case 'Inactive': return 'secondary'
+        case 'Inactive': return 'secondary' 
         case 'Pending': return 'warning'
         case 'Banned': return 'danger'
         default: 'primary'

@@ -161,7 +161,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import usersData from '../../views/users/UsersData' 
 
 export default {
   name: 'Clients',
@@ -196,7 +195,7 @@ export default {
   },
 
   mounted() {
-    this.loadRecords()
+    this.loadRecords();
   }, 
 
   computed:{

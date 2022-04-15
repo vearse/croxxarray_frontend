@@ -2,20 +2,17 @@
   <div>
     <div class="container-fluid">
         <div class="row my-3">
-          <div class="col-6"> 
-            <h4 class="h4">{{$route.params.name}}</h4>
-          </div>
-          <div class="col-6"></div>
+            <h4 class="h4">{{data.code}} </h4>
         </div>
         <div class="row mt-2 mb-3">
-            <div  style="width: 18.5%;margin-right: 16px !important;"  class="" v-for="i in 5" :key="i">
+            <div  style="width: 18.5%;margin-right: 16px !important;"  class="" v-for="(info, i) in infos" :key="i">
               <CCard style="margin-right: -6px !important; margin-left: -6px !important;"
-                class="hover-shadow-md box-croxx  hove:bg-gray-100">
+                class="hover-shadow-sm box-croxx  hove:bg-gray-10">
                 <CCardBody>
                   <div class="flex flex-row">
                     <div class="px-2">
-                      <h6 class="h6 font-bold">Well Name</h6>
-                      <h5 class="h5">12900</h5>
+                      <h6 class="h6 font-bold"> {{ info.label }}  </h6>
+                      <h5 class="text-md text-muted">{{info.value}}</h5>
                     </div>
                   </div> 
                 </CCardBody>
@@ -206,6 +203,14 @@ export default {
       wells: Object.values(this.$store.state.wells.dataList),
       employees: Object.values(this.$store.state.groups.dataList),
       job_types: Object.values(this.$store.state.jobTypes.dataList),
+
+      infos : [
+        // {label: 'Well Name', value: this.data.well.name },
+        // {label: 'Job Type', value: this.data.job_type.name },
+        // {label: 'Job Number', value: this.data.job_number },
+        // {label: 'Job Start', value: this.data.job_start },
+        // {label: 'Planned Loadout', value: this.data.planned_loadout }
+      ],
       
       form : {
         well_id: "",
@@ -242,7 +247,17 @@ export default {
   methods: {
 
     loadRecords(){
-      this.$store.dispatch('projects/view', this.id);
+      this.$store.dispatch('projects/view', this.id)
+      .then(() => {
+        console.log(this.data);
+         this.infos = [
+            {label: 'Well Name', value: this.data.well.name },
+            {label: 'Job Type', value: this.data.job_type.name },
+            {label: 'Job Number', value: this.data.job_number },
+            {label: 'Job Start', value: this.data.job_start },
+            {label: 'Planned Loadout', value: this.data.planned_loadout }
+          ]
+      });
     },
 
     createNewProject(){
