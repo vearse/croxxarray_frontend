@@ -14,7 +14,7 @@
                       <!-- Tab 1 -->
                       <CTab active>
                         <template slot="title">
-                          {{tabs[0]}} 
+                          {{tabs[0]}}  
                           <v-icon name="circle" class="dot-mode float-right "></v-icon>
                         </template>
                         <div class="container my-4">

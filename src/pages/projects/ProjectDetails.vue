@@ -132,9 +132,9 @@
                                           </div>
                                           <CCollapse :show="index === list_accord">
                                             <CCardBody>
-                                              {{list}}
+                                              {{list}} {{answerNow}}
                                                <div v-for="(question, id) in list.checklist_questions" :key="id">
-                                                  <CListGroupItem 
+                                                  <CListGroupItem @click="answerNow = !answerNow"
                                                       class="px-0 hover-shadow-sm bg-light mb-2 border-none" style="height: 36px">
                                                       <div class="row mx-0 pb-2 ">
                                                         <div class="col-5">
@@ -170,20 +170,24 @@
             </CCard>
         </div>
     </div>
-
+    
+    <AddAnswer v-bind:isanswer="answerNow"  />
   </div>
 </template>
 <style scoped>
 
 </style>
-<script>
+
+<script> 
 import { mapState } from 'vuex'
+import AddAnswer from '../../components/AddAnswer.vue';
 import AddSubcomponent from '../../components/AddSubcomponent.vue';
 
 export default {
   name: 'CreateProject',
   components: {
-    AddSubcomponent
+    AddSubcomponent,
+    AddAnswer
   },
 
   data () {
@@ -204,6 +208,7 @@ export default {
       employees: Object.values(this.$store.state.groups.dataList),
       job_types: Object.values(this.$store.state.jobTypes.dataList),
 
+      answerNow: false,
       infos : [
         // {label: 'Well Name', value: this.data.well.name },
         // {label: 'Job Type', value: this.data.job_type.name },
@@ -249,7 +254,6 @@ export default {
     loadRecords(){
       this.$store.dispatch('projects/view', this.id)
       .then(() => {
-        console.log(this.data);
          this.infos = [
             {label: 'Well Name', value: this.data.well.name },
             {label: 'Job Type', value: this.data.job_type.name },
