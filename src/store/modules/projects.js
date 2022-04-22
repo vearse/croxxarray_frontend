@@ -172,8 +172,33 @@ const storeModule = {
             }
             commit("SET_ERROR", "Internal connection error, please try again.");
           }
-        }
+        },
 
+
+        // Save Makeup Answer
+        async store_makeup({ commit }, payload){
+          try{
+              commit("SET_LOADING");
+              let response = await $http.post("/croxxarray/makeup/projects", payload); 
+              let responsePayload = response.data;
+              commit("SET_DATA", responsePayload);
+              commit("SET_SUCCESS", responsePayload.message);  
+          } catch (error) {
+            console.log(error); 
+            if (error && error.data) {
+              let errorPayload = error.data; 
+              // console.log(errorPayload);
+              if (errorPayload.message) { 
+                commit("SET_ERROR", errorPayload.message);
+                if (errorPayload.errors) {
+                  commit("SET_VALIDATION_ERRORS", errorPayload.errors);
+                }
+                return;
+              }
+            }
+            commit("SET_ERROR", "Internal connection error, please try again.");
+          }
+      },
   }
 
 }

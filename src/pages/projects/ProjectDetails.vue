@@ -174,8 +174,7 @@ export default {
       employees: Object.values(this.$store.state.groups.dataList),
       job_types: Object.values(this.$store.state.jobTypes.dataList),
 
-      answerNow: false,
-      item: {},
+     
       infos : [],
       
       form : {

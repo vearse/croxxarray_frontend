@@ -245,7 +245,7 @@ export default {
       
       this.$store.dispatch("projects/create", this.form)
         .then(() => {
-            if (this.success !== false && this.error === false) {
+          if (this.success !== false && this.error === false) {
             this.loadRecords();
             this.$router.push({ name: "" });
             let msg = this.success;
