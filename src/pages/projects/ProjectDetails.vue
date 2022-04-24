@@ -25,13 +25,6 @@
                 <h4 class="h4 d-inline pl-4" v-if="isTeam"> Add Team Members</h4>
                 <h4 class="d-inline h4 pl-4" v-else>Equipment List</h4> 
                 <div class="card-header-actions">
-                  <a 
-                    href="https://coreui.io/vue/docs/components/card-components" 
-                    class="card-header-action" 
-                    rel="noreferrer noopener" 
-                    target="_blank">
-                    <small class="text-muted">docs</small>
-                  </a>
                   <button class="btn " @click="isTeam =  !isTeam">Team</button>
                 </div>
               </CCardHeader>
@@ -41,7 +34,8 @@
                       <!-- Team -->
                       <div v-if="isTeam" class="col-9">
                         <div >
-                              {{data.teams}}
+                            <ProjectTeam v-bind:teams="data.teams"></ProjectTeam>
+                              <!-- {{data.teams}}
                               <div class="team-members">
                                   <CRow v-for="(team, i) in form.teams" :key="i">
                                     <CCol sm="6">
@@ -71,60 +65,70 @@
                                         </validation-provider>
                                     </CCol> 
                                   </CRow>
-                              </div>
+                              </div> -->
                         </div>
                       </div>
                       <!-- Equipment List -->
                       <CTabs v-else class="col-9">
                           <CTab  class="col" title="Details" active>
                               <div class="mt-4">
-                                <div>
-                                  <CListGroupItem class="mb-2" 
-                                    v-for="(list, index) in data.equipment_list" :key="list.id"
-                                    @click="detail_accord = index" 
-                                  >
-                                    <div 
-                                      class="rounded-md bg-white my-1 c">
-                                      <h5 class="m-0" v-text="list.name"></h5>
-                                      <hr v-if="index === detail_accord" class="mt-2">
-                                    </div>
-                                    <CCollapse :show="index === detail_accord">
-                                      <CCardBody>
-                                        {{ list.project_details }} 
-                                      </CCardBody>
-                                    </CCollapse>
-                                  </CListGroupItem>
+                                <div class="pr-3">
+                                   <div v-for="(question, index) in data.project_details.details" :key="index">
+                                      <CListGroupItem 
+                                          class="px-0 hover-shadow-sm bg-light mb-2 border-none" style="height: 36px">
+                                          <div class="row mx-0 pb-2 ">
+                                          <div class="col-5">
+                                              <p class="text-sm truncate">{{question.name}} </p>
+                                          </div>
+                                          <div class="col-6">
+                                              <p class="text-sm truncate"> {{question.answers}}</p>
+                                          </div>
+                                          <div class="col-1">
+                                              <v-icon name="trash" class="mr-4"></v-icon>
+                                          </div>
+                                          </div>
+                                      </CListGroupItem>
+                                  </div>
                                 </div>
                               </div>
                           </CTab>
+
                           <CTab  class="col" title="List" >
                               <div class="mt-4">
-                                <div>
-                                  <CListGroupItem class="mb-0" 
-                                   v-for="(list, index) in data.equipment_list" :key="list.id"
-                                    @click="list_accord = index" >
-                                    <div 
-                                      class="rounded-md bg-white my-1 c">
-                                      <h5 class="m-0" v-text="list.name"></h5>
-                                    </div>
-                                    <CCollapse :show="index === list_accord">
-                                      <CCardBody>
-                                        {{ list }} {{list_accord}}
-                                      </CCardBody>
-                                    </CCollapse>
-                                  </CListGroupItem>
+                                <div> 
+                                  <div class="mt-4">
+                                    <Checksheet v-bind:checksheet="data.checksheet"></Checksheet>
+                                  </div>
                                 </div>
                               </div>
                           </CTab>
+
                           <CTab  class="col" title="MakeUp Plans" >
                             
                               <div class="mt-4">
                                 <MakeupPlan v-bind:makeup_plans="data.makeup_plans"></MakeupPlan>
                               </div>
                             
-                            
                           </CTab>
                           <CTab  class="col" title="Final Approvals" >
+                                <div class="mt-4 pr-3">
+                                   <div v-for="(question, index) in data.project_details.approvals" :key="index">
+                                      <CListGroupItem 
+                                          class="px-0 hover-shadow-sm bg-light mb-2 border-none" style="height: 36px">
+                                          <div class="row mx-0 pb-2 ">
+                                          <div class="col-5">
+                                              <p class="text-sm truncate">{{question.name}} </p>
+                                          </div>
+                                          <div class="col-6">
+                                              <p class="text-sm truncate"> {{question.answers}}</p>
+                                          </div>
+                                          <div class="col-1">
+                                              <v-icon name="trash" class="mr-4"></v-icon>
+                                          </div>
+                                          </div>
+                                      </CListGroupItem>
+                                  </div>
+                                </div>
                              
                           </CTab>
                       </CTabs>
@@ -146,14 +150,19 @@
 import { mapState } from 'vuex'
 import AddAnswer from '../../components/AddAnswer.vue';
 import AddSubcomponent from '../../components/AddSubcomponent.vue';
-import MakeupPlan from './MakeeupPlan.vue';
+import MakeupPlan from './MakeupPlan.vue';
+import Checksheet from './Checksheet.vue';
+import ProjectTeam from './ProjectTeam.vue';
+
 
 export default {
   name: 'CreateProject',
   components: {
-    AddSubcomponent,
+    // AddSubcomponent,
     AddAnswer,
-    MakeupPlan
+    Checksheet,
+    MakeupPlan,
+    ProjectTeam
   },
 
   data () {
@@ -174,7 +183,8 @@ export default {
       employees: Object.values(this.$store.state.groups.dataList),
       job_types: Object.values(this.$store.state.jobTypes.dataList),
 
-     
+      answerNow: false,
+      item: {},
       infos : [],
       
       form : {
@@ -217,7 +227,7 @@ export default {
         question: item.checklist_questions[index],
         answer: item.answers[index]
       };
-      console.log(this.item);
+      // console.log(this.item);
     },
 
     loadRecords(){
